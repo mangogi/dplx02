@@ -1,17 +1,20 @@
 <template>
   <div id="topbox">
-    <div class="box01">
-        <img :src="imgs" class="left01" />
-        <div class="center01">
-          <p class="text01">{{tit}}</p>
+    <div class="boxs">
+      <!-- 左侧图标 -->
+        <img :src="imgurl" class="imgs" />
+        <!-- 中间数字部分 -->
+        <div class="numberBox">
+          <p class="title">{{title}}</p>
           <div class="counts">
-            <div class="number01" v-for="(item,index) in dajsl2" :key="index">
+            <div class="numbers" v-for="(item,index) in num" :key="index">
               <span class="font">{{ item }}</span>
             </div>
-            <span class="danwei">家</span>
+            <span class="units">家</span>
           </div>
         </div>
-        <div class="right01">
+        <!-- 右边比例部分 -->
+        <div class="percent">
           <div>
             <span>同比</span>
             <span class="down">{{down}}</span>
@@ -29,59 +32,71 @@
 
 export default {
   name: 'TopBox',
-  props:['dajsl2','imgurl','tit','up','down','keys'],
+  // props:['num','imgurl','title','up','down','keys'],
+  props:{
+    num:{
+      type:Array,
+      default:['0'],
+    },
+    imgurl:{
+      type:String,
+      default:'',
+    },
+    title:{
+      type:String,
+      default:'',
+    },
+    up:{
+      type:String,
+      default:'',
+    },
+    down:{
+      type:String,
+      default:'',
+    },
+    keys:{
+      type:String,
+      default:'',
+    },
+  },
   data(){
       return{
         imgs:'',
       }
   },
   mounted(){
-      this.imgUrlSet()
   },
   methods:{
-    imgUrlSet(){
-      if(this.keys == '1'){
-          this.imgs = require('../../assets/imgs/档案总存档.png')
-      }
-      if(this.keys == '2'){
-          this.imgs = require('../../assets/imgs/档案接受量.png')
-      }
-      if(this.keys == '3'){
-          this.imgs = require('../../assets/imgs/档案借阅量.png')
-      }
-      if(this.keys == '4'){
-          this.imgs = require('../../assets/imgs/档案转出量.png')
-      }
-      
-      console.log(this.imgs)
+    getImgurl(){
+      this.$emit('getImgs')
     }
   },
 }
 </script>
 
 <style>
-.box01 {
+.boxs {
   width: 447px;
   height: 111px;
-  background-image: url("../../assets/imgs/box01.png");
+  background-image: url("../../../assets/imgs/box01.png");
   margin-right: 20px;
   display: flex;
   flex-direction: row;
 }
-.left01 {
+.imgs {
   margin-top: 31px;
   margin-left: 33px;
   width: 48px;
   height: 56px;
 }
-.center01 {
+.numberBox {
   margin-left: 17px;
   width: 200px;
   height: 100px;
   display: flex;
   flex-direction: column;
 }
-.number01 {
+.numbers {
   width: 30px;
   height: 40px;
  background-color: #0043b9;
@@ -102,7 +117,7 @@ export default {
   -webkit-background-clip: text;
   color: transparent;
 }
-.text01 {
+.title {
   width: 70px;
   height: 14px;
   font-family: PingFang-SC-Regular;
@@ -113,7 +128,7 @@ export default {
   letter-spacing: 0px;
   color: #ffffff;
 }
-.danwei{
+.units{
   width: 14px;
 	height: 12px;
 	font-family: MicrosoftYaHei;
@@ -129,7 +144,7 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.right01{
+.percent{
   width: 100px;
 	height: 38px;
 	font-family: MicrosoftYaHei;

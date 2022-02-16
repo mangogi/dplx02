@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import MainPage from './components/MainPage.vue'
+import MainPage from './views/ flowTalents/MainPage.vue'
 
 export default {
   name: 'app',
