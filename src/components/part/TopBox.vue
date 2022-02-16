@@ -36,6 +36,10 @@ export default {
       }
   },
   mounted(){
+      this.imgUrlSet()
+  },
+  methods:{
+    imgUrlSet(){
       if(this.keys == '1'){
           this.imgs = require('../../assets/imgs/档案总存档.png')
       }
@@ -50,7 +54,8 @@ export default {
       }
       
       console.log(this.imgs)
-  }
+    }
+  },
 }
 </script>
 
@@ -83,6 +88,7 @@ export default {
 	border-radius: 2px;
 	border: solid 1px #274d8e;
   margin-right: 3px;
+  text-align: center;
 }
 .font {
   font-family: Impact;
@@ -90,8 +96,8 @@ export default {
   font-weight: normal;
   font-stretch: normal;
   letter-spacing: 1px;
-  margin-top: 8px;
-  margin-left: 8px;
+  line-height: 40px;
+  /* margin-left: 8px; */
   background: linear-gradient(to bottom, #ffffff, #44a5eb);
   -webkit-background-clip: text;
   color: transparent;
