@@ -50,6 +50,7 @@
           <div class="titlebar pos">
             <div class="titletext">性别分布</div>
           </div>
+          <!-- 性别分布饼图 -->
           <pie class="chartsSex"></pie>
         </div>
         <div class="leftCenter"></div>
@@ -108,7 +109,6 @@ export default {
     arrSet() {
       const counts = this.dajsl.toString().split(""); //将数字转位数组
       this.dajslArr = counts;
-      console.log(this.dajslArr);
       if (this.dajslArr.length < 6) {
         if (this.dajslArr.length == 5) {
           this.dajslArr.unshift("0");

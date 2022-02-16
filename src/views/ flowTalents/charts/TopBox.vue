@@ -2,76 +2,67 @@
   <div id="topbox">
     <div class="boxs">
       <!-- 左侧图标 -->
-        <img :src="imgurl" class="imgs" />
-        <!-- 中间数字部分 -->
-        <div class="numberBox">
-          <p class="title">{{title}}</p>
-          <div class="counts">
-            <div class="numbers" v-for="(item,index) in num" :key="index">
-              <span class="font">{{ item }}</span>
-            </div>
-            <span class="units">家</span>
+      <img :src="imgurl" class="imgs" />
+      <!-- 中间数字部分 -->
+      <div class="numberBox">
+        <p class="title">{{ title }}</p>
+        <div class="counts">
+          <div class="numbers" v-for="(item, index) in num" :key="index">
+            <span class="font">{{ item }}</span>
           </div>
-        </div>
-        <!-- 右边比例部分 -->
-        <div class="percent">
-          <div>
-            <span>同比</span>
-            <span class="down">{{down}}</span>
-          </div>
-          <div>
-            <span>同比</span>
-            <span class="up">{{up}}</span>
-          </div>
+          <span class="units">家</span>
         </div>
       </div>
+      <!-- 右边比例部分 -->
+      <div class="percent">
+        <div>
+          <span>同比</span>
+          <span class="down">{{ down }}</span>
+        </div>
+        <div>
+          <span>同比</span>
+          <span class="up">{{ up }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'TopBox',
-  // props:['num','imgurl','title','up','down','keys'],
-  props:{
-    num:{
-      type:Array,
-      default:['0'],
+  name: "TopBox",
+  props: {
+    num: {
+      type: Array,
+      default: ["0"],
     },
-    imgurl:{
-      type:String,
-      default:'',
+    imgurl: {
+      type: String,
+      default: "",
     },
-    title:{
-      type:String,
-      default:'',
+    title: {
+      type: String,
+      default: "",
     },
-    up:{
-      type:String,
-      default:'',
+    up: {
+      type: String,
+      default: "",
     },
-    down:{
-      type:String,
-      default:'',
+    down: {
+      type: String,
+      default: "",
     },
-    keys:{
-      type:String,
-      default:'',
+    keys: {
+      type: String,
+      default: "",
     },
   },
-  data(){
-      return{
-        imgs:'',
-      }
+  data() {
+    return {};
   },
-  mounted(){
-  },
-  methods:{
-    getImgurl(){
-      this.$emit('getImgs')
-    }
-  },
-}
+  mounted() {},
+  methods: {},
+};
 </script>
 
 <style>
@@ -99,9 +90,9 @@ export default {
 .numbers {
   width: 30px;
   height: 40px;
- background-color: #0043b9;
-	border-radius: 2px;
-	border: solid 1px #274d8e;
+  background-color: #0043b9;
+  border-radius: 2px;
+  border: solid 1px #274d8e;
   margin-right: 3px;
   text-align: center;
 }
@@ -128,39 +119,39 @@ export default {
   letter-spacing: 0px;
   color: #ffffff;
 }
-.units{
+.units {
   width: 14px;
-	height: 12px;
-	font-family: MicrosoftYaHei;
-	font-size: 14px;
-	font-weight: normal;
-	font-stretch: normal;
-	line-height: 70px;
-	letter-spacing: 0px;
-	color: #a5a7b1;
+  height: 12px;
+  font-family: MicrosoftYaHei;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  line-height: 70px;
+  letter-spacing: 0px;
+  color: #a5a7b1;
   margin-left: 9px;
 }
 .counts {
   display: flex;
   flex-direction: row;
 }
-.percent{
+.percent {
   width: 100px;
-	height: 38px;
-	font-family: MicrosoftYaHei;
-	font-size: 14px;
+  height: 38px;
+  font-family: MicrosoftYaHei;
+  font-size: 14px;
   display: flex;
   flex-direction: column;
   color: #a5a7b1;
   margin-top: 46px;
   margin-left: 24px;
 }
-.up{
-	color: #ff2639;
+.up {
+  color: #ff2639;
   /* margin-left: 1px; */
 }
-.down{
-	color: #3ef9bf;
+.down {
+  color: #3ef9bf;
   margin-left: 0px;
 }
 </style>
