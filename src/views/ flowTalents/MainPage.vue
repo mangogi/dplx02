@@ -51,21 +51,55 @@
             <div class="titletext">性别分布</div>
           </div>
           <!-- 性别分布饼图 -->
-          <pie class="chartsSex"></pie>
+          <pie class="chartsSex chartsWidth" :pieData="sexData" :iconUrl="sexUrl"></pie>
         </div>
-        <div class="leftCenter"></div>
-        <div class="leftBottom"></div>
-      </div>
+        <div class="leftCenter">
+          <div class="titlebar pos">
+            <div class="titletext">年龄分布</div>
+          </div>
+          <!-- 年龄分布条形图 -->
+          <pie class="chartsAge chartsWidth"></pie>
+        </div>
+        <div class="leftBottom">
+          <div class="titlebar pos">
+            <div class="titletext">学历分布</div>
+          </div>
+          <!-- 学历分布漏斗图 -->
+          <pie class="chartsEdu chartsWidth"></pie>
+        </div>
+        </div>
+     
       <!-- 中间地图部分 -->
       <div class="mapBox">
-        <div class="mapTop"></div>
+        <div class="mapTop">
+          <br>
+          地图占位
+        </div>
         <div class="mapBottom"></div>
       </div>
       <!-- 右边三个图表 -->
       <div class="right">
-        <div class="rightTop"></div>
-        <div class="rightCenter"></div>
-        <div class="rightBottom"></div>
+        <div class="rightTop">
+          <div class="titlebar pos">
+            <div class="titletext">存档性质分析</div>
+          </div>
+          <!-- 性别分布饼图 -->
+          <pie class="chartsSex chartsWidth"></pie>
+        </div>
+        <div class="rightCenter">
+          <div class="titlebar pos">
+            <div class="titletext">存档名族分析</div>
+          </div>
+          <!-- 性别分布饼图 -->
+          <pie class="chartsSex chartsWidth" :pieData="nationData" :iconUrl="nationUrl"></pie>
+        </div>
+        <div class="rightBottom">
+          <div class="titlebar pos">
+            <div class="titletext">近六个月档案接收和转出情况</div>
+          </div>
+          <!-- 性别分布饼图 -->
+          <pie class="chartsSex chartsWidth"></pie>
+        </div>
       </div>
     </div>
 
@@ -95,6 +129,11 @@ export default {
       receiveImg:"",  //档案接收量图标路径
       rendImg:"",     //档案租借量图标路径
       outImg:"",    //档案转出量图标路径
+      sexData:[{name:'男性',value:'245678',per:'50.00%'},{name:'女性',value:'240078',per:'50.00%'}],    //性别饼图数据
+      nationData:[{name:'汉族',value:'245678',per:'50.00%'},{name:'少数名族',value:'240078',per:'50.00%'}],    //性别饼图数据
+      bgUrl:"",     //
+      sexUrl:"",
+      nationUrl:"",
 
     };
   },
@@ -131,10 +170,15 @@ export default {
      * 处理图像路径 方便传参
      */
     imgUrlSet() {
+      // topBox 组件的图片
       this.allImg = require("../../assets/imgs/档案总存档.png");
       this.receiveImg = require("../../assets/imgs/档案接受量.png");
       this.rendImg = require("../../assets/imgs/档案借阅量.png");
       this.outImg = require("../../assets/imgs/档案转出量.png");
+
+      // pie组件的图片路径处理
+      this.sexUrl = require("../../assets/imgs/xingbietongji.png")
+      this.nationUrl = require("../../assets/imgs/存档民族分析.png")
     },
   },
 };
@@ -197,8 +241,12 @@ export default {
 }
 /* 下面部分 */
 .bottom {
+  display: flex;
+  flex-direction: row;
 }
-
+.left{
+  width: 540px;
+}
 .titlebar {
   width: 517px;
   height: 51px;
@@ -226,5 +274,23 @@ export default {
 }
 .chartsSex {
   margin-left: 40px;
+}
+
+
+
+.chartsWidth{
+  width: 517px;
+}
+/* 地图部分 */
+.mapBox{
+  width: 756px;
+  margin-left: 31px;
+  color: white;
+}
+
+/* 右边三个图表 */
+.right{
+  width: 540px;
+  margin-left: 31px;
 }
 </style>

@@ -1,12 +1,27 @@
 <template>
-  <div>
     <div class="charts" ref="chart"></div>
-  </div>
 </template>
 
 <script>
 export default {
   name: "bar",
+  props:{
+    pieData:{
+      type:Array,
+      default:() => {
+        return []
+      }
+    },
+    bgUrl:{
+      type:String,
+      default:''
+    },
+    iconUrl:{
+      type:String,
+      default:''
+    }
+
+  },
   data() {
     return {
 
@@ -14,43 +29,97 @@ export default {
   },
   mounted() {
     this.setPie();
+    console.log(this.bgUrl)
   },
   methods: {
     setPie() {
-      const pieData = [{sex:'男性',num:'245678',per:'50%'},{sex:'女性',num:'245678',per:'50%'}]
+      const pieData = this.pieData
       const chart = this.$refs.chart;
       if (chart) {
         const myChart = this.$echarts.init(chart);
         const option = {
+        graphic: {  
+          elements:[{
+            type: 'image',
+            left: '40%',
+            top:'32%',
+            z:3,
+            style: {
+            image: this.iconUrl,
+            width: 56,
+						height: 56
+            },
+          },
+            {
+            type: 'image',
+            left: '32.5%',
+            top:'15.8%',
+            z:3,
+            style: {
+              image: require('../../../assets/imgs/bg.png'),
+              width: 130,
+						height: 130
+            },
+          },
+          ]
+        },
           legend: {
             show: true,
-            top: "30%",
+            top: "-10%",
             left: "7%",
             orient: "horizontal",
-            itemGap: 200,
+            itemGap: 160,
             itemWidth: 56,
             itemHeight: 5,
             textStyle: {
               color: "#fff",
             },
+            align:"left",
             formatter: (params) => {
               console.log(pieData);
-              return  `{sex|`+ params + `}`;
+              let pieDataReverse = pieData.reverse()
+              for(let i = 0; i < pieDataReverse.length; i++){
+                console.log(params,pieDataReverse[i].name)
+                if(pieDataReverse[i].name == params){
+                  return '\n\n\n\n\n\n' + '{sex|'+pieDataReverse[i].name+'}' + '\n' +'{num|'+pieDataReverse[i].value + '}' + '{person|'+ '人'+ '}' + '\n' + '{pecent|' + pieDataReverse[i].per + '}'
+                }
+                
+              }
             },
-            rich:{
+            textStyle:{
+              color:'white',
+              padding:[0,-60],
+              rich:{
                 sex:{
-                    color:'red'
+                    color:'white',
+                    fontSize:16,
+                    padding:[30,0,0,0]    //上 右 下 左
+                },
+                num:{
+                  color:'white',
+                  fontSize:28,
+                  padding:[5,0]
+                },
+                person:{
+                  fontSize:14,
+                  padding:[5,0,0,10]
+                },
+                percent:{
+                  fontSize:14
                 }
             }
+            }
+            
           },
           series: [
             {
               name: "title",
               type: "pie",
               zlevel: 3,
-              hoverAnimation: false,
-              legendHoverLink: false,
-              radius: ["45%", "50%"],
+              startAngle:270, //起始角度
+              // hoverAnimation: false,
+              // legendHoverLink: false,
+              radius: ["52%", "60%"],
               center: ["45%", "50%"],
               label: {
                 show: false,
@@ -61,23 +130,20 @@ export default {
                 length: 30,
                 length2: 50,
               },
-              // itemStyle: {
-              //     shadowBlur: 15,
-              //     shadowColor: 'rgba(0, 0, 0, 0.3)',
-              // },
               data: [
+               
                 {
-                  value: 20,
-                  name: "女性",
-                  itemStyle: {
-                    color: "rgba(255,43,133,1)",
-                  },
-                },
-                {
-                  value: 20,
-                  name: "男性",
+                  value: pieData[0].value,
+                  name: pieData[0].name,
                   itemStyle: {
                     color: "rgba(5, 151, 252, 1)",
+                  },
+                },
+                 {
+                  value: pieData[1].value,
+                  name: pieData[1].name,
+                  itemStyle: {
+                    color: "rgba(255,43,133,1)",
                   },
                 },
               ],
@@ -87,9 +153,10 @@ export default {
               type: "pie",
               zlevel: 1,
               cursor: "default",
-              hoverAnimation: false,
-              legendHoverLink: false,
-              radius: ["37%", "50%"],
+              startAngle:270, //起始角度
+              // hoverAnimation: false,
+              // legendHoverLink: false,
+              radius: ["45%", "60%"],
               center: ["45%", "50%"],
               label: {
                 show: false,
@@ -102,17 +169,17 @@ export default {
               },
               data: [
                 {
-                  value: 20,
-                  name: "女性",
+                  value: pieData[0].value,
+                  name: pieData[0].name,
                   itemStyle: {
-                    color: "rgba(255,43,133,0.16)",
+                    color: "rgba(5, 151, 252, 0.16)",
                   },
                 },
                 {
-                  value: 20,
-                  name: "男性",
+                  value: pieData[1].value,
+                  name: pieData[1].name,
                   itemStyle: {
-                    color: "rgba(5, 151, 252, 0.16)",
+                    color: "rgba(255,43,133,0.16)",
                   },
                 },
               ],
