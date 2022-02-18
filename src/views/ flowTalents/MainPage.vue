@@ -83,15 +83,15 @@
           <div class="titlebar pos">
             <div class="titletext">存档性质分析</div>
           </div>
-          <!-- 性别分布饼图 -->
-          <pie class="chartsSex chartsWidth"></pie>
+          <!-- 存档性质分析饼图 -->
+          <pie class="chartsSex chartsWidth" :pieData="natureData" :iconUrl="nationUrl"></pie>
         </div>
         <div class="rightCenter">
           <div class="titlebar pos">
             <div class="titletext">存档名族分析</div>
           </div>
-          <!-- 性别分布饼图 -->
-          <pie class="chartsSex chartsWidth" :pieData="nationData" :iconUrl="nationUrl"></pie>
+          <!-- 存档名族分析饼图 -->
+          <pie class="chartsSex chartsWidth" :pieData="nationData" :iconUrl="natureUrl"></pie>
         </div>
         <div class="rightBottom">
           <div class="titlebar pos">
@@ -129,12 +129,13 @@ export default {
       receiveImg:"",  //档案接收量图标路径
       rendImg:"",     //档案租借量图标路径
       outImg:"",    //档案转出量图标路径
-      sexData:[{name:'男性',value:'245678',per:'50.00%'},{name:'女性',value:'240078',per:'50.00%'}],    //性别饼图数据
-      nationData:[{name:'汉族',value:'245678',per:'50.00%'},{name:'少数名族',value:'240078',per:'50.00%'}],    //性别饼图数据
+      sexData:[{name:'男性',val:'245678',per:'50.00%'},{name:'女性',val:'240078',per:'50.00%'}],    //性别饼图数据
+      nationData:[{name:'汉族',val:'245678',per:'50.00%'},{name:'少数名族',val:'240078',per:'50.00%'}],    //性别饼图数据
+      natureData:[{name:'个人存档',val:'245678',per:'50.00%'},{name:'企业存档',val:'180078',per:'50.00%'}],    //性别饼图数据
       bgUrl:"",     //
       sexUrl:"",
       nationUrl:"",
-
+      natureUrl:"",
     };
   },
   mounted() {
@@ -179,6 +180,7 @@ export default {
       // pie组件的图片路径处理
       this.sexUrl = require("../../assets/imgs/xingbietongji.png")
       this.nationUrl = require("../../assets/imgs/存档民族分析.png")
+      this.natureUrl = require("../../assets/imgs/存档性质分析.png")
     },
   },
 };

@@ -29,7 +29,6 @@ export default {
   },
   mounted() {
     this.setPie();
-    console.log(this.bgUrl)
   },
   methods: {
     setPie() {
@@ -81,7 +80,7 @@ export default {
               for(let i = 0; i < pieDataReverse.length; i++){
                 console.log(params,pieDataReverse[i].name)
                 if(pieDataReverse[i].name == params){
-                  return '\n\n\n\n\n\n' + '{sex|'+pieDataReverse[i].name+'}' + '\n' +'{num|'+pieDataReverse[i].value + '}' + '{person|'+ '人'+ '}' + '\n' + '{pecent|' + pieDataReverse[i].per + '}'
+                  return '\n\n\n\n\n\n' + '{sex|'+pieDataReverse[i].name+'}' + '\n' +'{num|'+pieDataReverse[i].val + '}' + '{person|'+ '人'+ '}' + '\n' + '{pecent|' + pieDataReverse[i].per + '}'
                 }
                 
               }
@@ -133,14 +132,14 @@ export default {
               data: [
                
                 {
-                  value: pieData[0].value,
+                  value: pieData[0].val,
                   name: pieData[0].name,
                   itemStyle: {
                     color: "rgba(5, 151, 252, 1)",
                   },
                 },
                  {
-                  value: pieData[1].value,
+                  value: pieData[1].val,
                   name: pieData[1].name,
                   itemStyle: {
                     color: "rgba(255,43,133,1)",
@@ -169,14 +168,14 @@ export default {
               },
               data: [
                 {
-                  value: pieData[0].value,
+                  value: pieData[0].val,
                   name: pieData[0].name,
                   itemStyle: {
                     color: "rgba(5, 151, 252, 0.16)",
                   },
                 },
                 {
-                  value: pieData[1].value,
+                  value: pieData[1].val,
                   name: pieData[1].name,
                   itemStyle: {
                     color: "rgba(255,43,133,0.16)",
