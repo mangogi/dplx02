@@ -51,28 +51,34 @@
             <div class="titletext">性别分布</div>
           </div>
           <!-- 性别分布饼图 -->
-          <pie class="chartsSex chartsWidth" :pieData="sexData" :iconUrl="sexUrl"></pie>
+          <pie
+            class="chartsSex chartsWidth"
+            :pieData="sexData"
+            :iconUrl="sexUrl"
+            :outColor="sexColorOne"
+            :innerColor="sexColorTwo"
+            v-if="flag"
+          ></pie>
         </div>
         <div class="leftCenter">
           <div class="titlebar pos">
             <div class="titletext">年龄分布</div>
           </div>
           <!-- 年龄分布条形图 -->
-          <pie class="chartsAge chartsWidth"></pie>
+          <bar class="chartsAge chartsWidth"></bar>
         </div>
         <div class="leftBottom">
           <div class="titlebar pos">
             <div class="titletext">学历分布</div>
           </div>
           <!-- 学历分布漏斗图 -->
-          <pie class="chartsEdu chartsWidth"></pie>
         </div>
-        </div>
-     
+      </div>
+
       <!-- 中间地图部分 -->
       <div class="mapBox">
         <div class="mapTop">
-          <br>
+          <br />
           地图占位
         </div>
         <div class="mapBottom"></div>
@@ -84,21 +90,35 @@
             <div class="titletext">存档性质分析</div>
           </div>
           <!-- 存档性质分析饼图 -->
-          <pie class="chartsSex chartsWidth" :pieData="natureData" :iconUrl="nationUrl"></pie>
+          <pie
+            class="chartsSex chartsWidth"
+            :pieData="natureData"
+            :iconUrl="natureUrl"
+            :outColor="natureColorOne"
+            :innerColor="natureColorTwo"
+            v-if="flag"
+          ></pie>
         </div>
         <div class="rightCenter">
           <div class="titlebar pos">
             <div class="titletext">存档名族分析</div>
           </div>
           <!-- 存档名族分析饼图 -->
-          <pie class="chartsSex chartsWidth" :pieData="nationData" :iconUrl="natureUrl"></pie>
+          <pie
+            class="chartsSex chartsWidth"
+            :pieData="nationData"
+            :iconUrl="nationUrl"
+            :outColor="nationColorOne"
+            :innerColor="nationColorTwo"
+            v-if="flag"
+          ></pie>
         </div>
         <div class="rightBottom">
           <div class="titlebar pos">
             <div class="titletext">近六个月档案接收和转出情况</div>
           </div>
-          <!-- 性别分布饼图 -->
-          <pie class="chartsSex chartsWidth"></pie>
+          <!-- 近6个月档案接收和转出情况 -->
+          <vertical-bar class="chartsSex chartsWidth"></vertical-bar>
         </div>
       </div>
     </div>
@@ -111,6 +131,7 @@
 import Bar from "./charts/bar.vue";
 import TopBox from "./charts/TopBox.vue";
 import Pie from "./charts/pie.vue";
+import VerticalBar from "./charts/verticalBar.vue";
 
 export default {
   name: " MainPage",
@@ -118,29 +139,47 @@ export default {
     Bar,
     TopBox,
     Pie,
+    VerticalBar,
   },
   data() {
     return {
-      dajsl: 46199,   //档案接收量
-      dajslArr: [],     //档案接收量数组
+      dajsl: 46199, //档案接收量
+      dajslArr: [], //档案接收量数组
       up: "+2.56%", //增长比例
       down: "-2.56%", //下降比例
       allImg: "", //档案总存档图标路径
-      receiveImg:"",  //档案接收量图标路径
-      rendImg:"",     //档案租借量图标路径
-      outImg:"",    //档案转出量图标路径
-      sexData:[{name:'男性',val:'245678',per:'50.00%'},{name:'女性',val:'240078',per:'50.00%'}],    //性别饼图数据
-      nationData:[{name:'汉族',val:'245678',per:'50.00%'},{name:'少数名族',val:'240078',per:'50.00%'}],    //性别饼图数据
-      natureData:[{name:'个人存档',val:'245678',per:'50.00%'},{name:'企业存档',val:'180078',per:'50.00%'}],    //性别饼图数据
-      bgUrl:"",     //
-      sexUrl:"",
-      nationUrl:"",
-      natureUrl:"",
+      receiveImg: "", //档案接收量图标路径
+      rendImg: "", //档案租借量图标路径
+      outImg: "", //档案转出量图标路径
+      sexData: [
+        { name: "男性", val: "245678", per: "50.00%" },
+        { name: "女性", val: "240078", per: "50.00%" },
+      ], //性别饼图数据
+      nationData: [
+        { name: "汉族", val: "245678", per: "50.00%" },
+        { name: "少数名族", val: "240078", per: "50.00%" },
+      ], //民族饼图数据
+      natureData: [
+        { name: "个人存档", val: "245678", per: "50.00%" },
+        { name: "企业存档", val: "180078", per: "50.00%" },
+      ], //性质饼图数据
+      bgUrl: "", //
+      sexUrl: "",
+      nationUrl: "",
+      natureUrl: "",
+      sexColorOne: [],
+      sexColorTwo: [],
+      nationColorOne: [],
+      nationColorTwo: [],
+      natureColorOne: [],
+      natureColorTwo: [],
+      flag:false,
     };
   },
   mounted() {
     this.arrSet();
-    this.imgUrlSet()
+    this.imgUrlSet();
+    this.setColor()
   },
   methods: {
     /**
@@ -178,9 +217,26 @@ export default {
       this.outImg = require("../../assets/imgs/档案转出量.png");
 
       // pie组件的图片路径处理
-      this.sexUrl = require("../../assets/imgs/xingbietongji.png")
-      this.nationUrl = require("../../assets/imgs/存档民族分析.png")
-      this.natureUrl = require("../../assets/imgs/存档性质分析.png")
+      this.sexUrl = require("../../assets/imgs/xingbietongji.png");
+      this.nationUrl = require("../../assets/imgs/存档民族分析.png");
+      this.natureUrl = require("../../assets/imgs/存档性质分析.png");
+      
+    },
+    /**
+     * 设置饼图的颜色
+     */
+    setColor() {
+      this.sexColorOne = [ "rgba(5, 151, 252,1)","rgba(255, 43, 133,1)"];    // out
+      this.sexColorTwo = ["rgba(5, 151, 252, 0.16)","rgba(255, 43, 133,0.16)"];       //in
+      this.natureColorOne = ["rgba(0, 217, 153,1)", "rgba(255, 228, 0,1)"];
+      this.natureColorTwo = [
+        "rgba(0, 217, 153, 0.16)",
+        "rgba(255, 228, 0,0.16)",
+      ];
+      this.nationColorOne = ["rgba(18, 91, 255, 1)", "rgba(26, 251, 255,1)"];
+      this.nationColorTwo = ["rgba(18, 91, 255,0.16)", "rgba(26, 251, 255,0.16)"];
+
+      this.flag = true
     },
   },
 };
@@ -246,7 +302,7 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.left{
+.left {
   width: 540px;
 }
 .titlebar {
@@ -278,20 +334,18 @@ export default {
   margin-left: 40px;
 }
 
-
-
-.chartsWidth{
+.chartsWidth {
   width: 517px;
 }
 /* 地图部分 */
-.mapBox{
+.mapBox {
   width: 756px;
   margin-left: 31px;
   color: white;
 }
 
 /* 右边三个图表 */
-.right{
+.right {
   width: 540px;
   margin-left: 31px;
 }

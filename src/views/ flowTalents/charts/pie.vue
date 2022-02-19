@@ -1,30 +1,41 @@
 <template>
-    <div class="charts" ref="chart"></div>
+  <div class="charts" ref="chart"></div>
 </template>
 
 <script>
 export default {
   name: "bar",
-  props:{
-    pieData:{
-      type:Array,
-      default:() => {
-        return []
-      }
+  props: {
+    pieData: {
+      type: Array,
+      default: () => {
+        return [];
+      },
     },
-    bgUrl:{
-      type:String,
-      default:''
+    bgUrl: {
+      type: String,
+      default: "",
     },
-    iconUrl:{
-      type:String,
-      default:''
-    }
-
+    iconUrl: {
+      type: String,
+      default: "",
+    },
+    outColor: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+    innerColor: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   data() {
     return {
-
+      myChart:{},
     };
   },
   mounted() {
@@ -32,36 +43,37 @@ export default {
   },
   methods: {
     setPie() {
-      const pieData = this.pieData
+      const pieData = this.pieData;
       const chart = this.$refs.chart;
       if (chart) {
-        const myChart = this.$echarts.init(chart);
+        this.myChart = this.$echarts.init(chart);
         const option = {
-        graphic: {  
-          elements:[{
-            type: 'image',
-            left: '40%',
-            top:'32%',
-            z:3,
-            style: {
-            image: this.iconUrl,
-            width: 56,
-						height: 56
-            },
+          graphic: {
+            elements: [
+              {
+                type: "image",
+                left: "41.6%",
+                top: "39%",
+                z: 3,
+                style: {
+                  image: this.iconUrl,
+                  width: 36,
+                  height: 36,
+                },
+              },
+              {
+                type: "image",
+                left: "32.5%",
+                top: "15.8%",
+                z: 3,
+                style: {
+                  image: require("../../../assets/imgs/bg.png"),
+                  width: 130,
+                  height: 130,
+                },
+              },
+            ],
           },
-            {
-            type: 'image',
-            left: '32.5%',
-            top:'15.8%',
-            z:3,
-            style: {
-              image: require('../../../assets/imgs/bg.png'),
-              width: 130,
-						height: 130
-            },
-          },
-          ]
-        },
           legend: {
             show: true,
             top: "-10%",
@@ -73,49 +85,45 @@ export default {
             textStyle: {
               color: "#fff",
             },
-            align:"left",
+            align: "left",
             formatter: (params) => {
-              console.log(pieData);
-              let pieDataReverse = pieData.reverse()
-              for(let i = 0; i < pieDataReverse.length; i++){
-                console.log(params,pieDataReverse[i].name)
-                if(pieDataReverse[i].name == params){
-                  return '\n\n\n\n\n\n' + '{sex|'+pieDataReverse[i].name+'}' + '\n' +'{num|'+pieDataReverse[i].val + '}' + '{person|'+ '人'+ '}' + '\n' + '{pecent|' + pieDataReverse[i].per + '}'
+              let pieDataReverse = pieData.reverse();
+              for (let i = 0; i < pieDataReverse.length; i++) {
+                if (pieDataReverse[i].name == params) {
+                  return "\n\n\n\n\n\n" + "{sex|" + params + "}" + '\n' +'{num|'+pieDataReverse[i].val + '}' + '{person|'+ '人'+ '}' + '\n' + '{pecent|' + pieDataReverse[i].per + '}'
                 }
-                
               }
             },
-            textStyle:{
-              color:'white',
-              padding:[0,-60],
-              rich:{
-                sex:{
-                    color:'white',
-                    fontSize:16,
-                    padding:[30,0,0,0]    //上 右 下 左
+            textStyle: {
+              color: "white",
+              padding: [0, -60],
+              rich: {
+                sex: {
+                  color: 'white',
+                  fontSize: 16,
+                  padding: [30, 0, 0, 0], //上 右 下 左
                 },
-                num:{
-                  color:'white',
-                  fontSize:28,
-                  padding:[5,0]
+                num: {
+                  color: "white",
+                  fontSize: 28,
+                  padding: [5, 0],
                 },
-                person:{
-                  fontSize:14,
-                  padding:[5,0,0,10]
+                person: {
+                  fontSize: 14,
+                  padding: [5, 0, 0, 10],
                 },
-                percent:{
-                  fontSize:14
-                }
-            }
-            }
-            
+                percent: {
+                  fontSize: 14,
+                },
+              },
+            },
           },
           series: [
             {
               name: "title",
               type: "pie",
               zlevel: 3,
-              startAngle:270, //起始角度
+              startAngle: 270, //起始角度
               // hoverAnimation: false,
               // legendHoverLink: false,
               radius: ["52%", "60%"],
@@ -130,19 +138,18 @@ export default {
                 length2: 50,
               },
               data: [
-               
                 {
                   value: pieData[0].val,
                   name: pieData[0].name,
                   itemStyle: {
-                    color: "rgba(5, 151, 252, 1)",
+                    color: this.outColor[0],
                   },
                 },
-                 {
+                {
                   value: pieData[1].val,
                   name: pieData[1].name,
                   itemStyle: {
-                    color: "rgba(255,43,133,1)",
+                    color: this.outColor[1],
                   },
                 },
               ],
@@ -152,10 +159,10 @@ export default {
               type: "pie",
               zlevel: 1,
               cursor: "default",
-              startAngle:270, //起始角度
+              startAngle: 270, //起始角度
               // hoverAnimation: false,
               // legendHoverLink: false,
-              radius: ["45%", "60%"],
+              radius: ["40%", "60%"],
               center: ["45%", "50%"],
               label: {
                 show: false,
@@ -171,14 +178,14 @@ export default {
                   value: pieData[0].val,
                   name: pieData[0].name,
                   itemStyle: {
-                    color: "rgba(5, 151, 252, 0.16)",
+                    color: this.innerColor[0],
                   },
                 },
                 {
                   value: pieData[1].val,
                   name: pieData[1].name,
                   itemStyle: {
-                    color: "rgba(255,43,133,0.16)",
+                    color: this.innerColor[1],
                   },
                 },
               ],
@@ -186,17 +193,21 @@ export default {
           ],
         };
 
-        myChart.setOption(option);
+        this.myChart.setOption(option);
         window.addEventListener("resize", function () {
-          myChart.resize();
+          this.myChart.resize();
         });
       }
-      this.$on("hook:destroyed", () => {
-        window.removeEventListener("resize", function () {
-          myChart.resize();
-        });
-      });
+      // this.$on("hook:destroyed", () => {
+      //   window.removeEventListener("resize", function () {
+      //     this.myChart.resize();
+      //   });
+      // });
     },
+  },
+  beforeDestory() {
+    this.$echarts.dispose(this.myChart);
+    this.myChart = null;
   },
 };
 </script>
