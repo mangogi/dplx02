@@ -65,7 +65,7 @@
             <div class="titletext">年龄分布</div>
           </div>
           <!-- 年龄分布条形图 -->
-          <bar class="chartsAge chartsWidth"></bar>
+          <bar class="chartsAge chartsWidth" :barData="ageData"></bar>
         </div>
         <div class="leftBottom">
           <div class="titlebar pos">
@@ -79,9 +79,19 @@
       <div class="mapBox">
         <div class="mapTop">
           <br />
-          地图占位
         </div>
-        <div class="mapBottom"></div>
+        <div class="mapBottom">
+          <p>转移排行</p>
+          <div class="panel_box">
+            <panel :provinceData="provinceData[0]" :imgurl="redlogo" v-if="showPanel"></panel>
+          <panel :provinceData="provinceData[1]" :imgurl="yellowlogo" v-if="showPanel"></panel>
+          <panel :provinceData="provinceData[2]" :imgurl="greenlogo" v-if="showPanel"></panel>
+          <panel :provinceData="provinceData[3]" :imgurl="''" v-if="showPanel"></panel>
+          <panel :provinceData="provinceData[4]" :imgurl="''" v-if="showPanel"></panel>
+          <panel :provinceData="provinceData[5]" :imgurl="''" v-if="showPanel"></panel>
+          </div>
+          
+        </div>
       </div>
       <!-- 右边三个图表 -->
       <div class="right">
@@ -118,7 +128,11 @@
             <div class="titletext">近六个月档案接收和转出情况</div>
           </div>
           <!-- 近6个月档案接收和转出情况 -->
-          <vertical-bar class="chartsSex chartsWidth"></vertical-bar>
+          <vertical-bar
+            v-if="showBar"
+            class="chartsSex chartsWidth"
+            :barData="fileData"
+          ></vertical-bar>
         </div>
       </div>
     </div>
@@ -132,6 +146,7 @@ import Bar from "./charts/bar.vue";
 import TopBox from "./charts/TopBox.vue";
 import Pie from "./charts/pie.vue";
 import VerticalBar from "./charts/verticalBar.vue";
+import Panel from "./charts/panel.vue";
 
 export default {
   name: " MainPage",
@@ -140,6 +155,7 @@ export default {
     TopBox,
     Pie,
     VerticalBar,
+    Panel,
   },
   data() {
     return {
@@ -173,13 +189,36 @@ export default {
       nationColorTwo: [],
       natureColorOne: [],
       natureColorTwo: [],
-      flag:false,
+      flag: false, //为了解决页面加载完成了 但是数据没有传到子组件的问题
+      ageData: [
+        { name: "60岁以上", value: "1234", per: "12%" },
+        { name: "50～59", value: "1234", per: "12%" },
+        { name: "40～49", value: "1234", per: "12%" },
+        { name: "30～39", value: "1234", per: "12%" },
+        { name: "20～29", value: "1234", per: "12%" },
+        { name: "20及以下", value: "1234", per: "12%" },
+      ],
+      fileData: [],
+      showBar: false,
+      provinceData:[
+        {name:'四川省',value:0.63,num:'8.8万人'},
+        {name:'天津市',value:0.63,num:'8.8万人'},
+        {name:'湖南省',value:0.63,num:'8.8万人'},
+        {name:'北京市',value:0.63,num:'8.8万人'},
+        {name:'上海市',value:0.63,num:'8.8万人'},
+        {name:'江苏省',value:0.63,num:'8.8万人'},
+      ],
+      redlogo:'',
+      yellowlogo:'',
+      greenlogo:'',
+      showPanel:false,
     };
   },
   mounted() {
     this.arrSet();
     this.imgUrlSet();
-    this.setColor()
+    this.setColor();
+    this.setBarData();
   },
   methods: {
     /**
@@ -220,23 +259,70 @@ export default {
       this.sexUrl = require("../../assets/imgs/xingbietongji.png");
       this.nationUrl = require("../../assets/imgs/存档民族分析.png");
       this.natureUrl = require("../../assets/imgs/存档性质分析.png");
-      
+
+      // panel 组件图片处理
+      this.redlogo = require('../../assets/imgs/location-full.png')
+      this.yellowlogo = require('../../assets/imgs/location-full-2.png')
+      this.greenlogo = require('../../assets/imgs/location-full-3.png')
+      this.showPanel = true
     },
     /**
      * 设置饼图的颜色
      */
     setColor() {
-      this.sexColorOne = [ "rgba(5, 151, 252,1)","rgba(255, 43, 133,1)"];    // out
-      this.sexColorTwo = ["rgba(5, 151, 252, 0.16)","rgba(255, 43, 133,0.16)"];       //in
+      this.sexColorOne = ["rgba(5, 151, 252,1)", "rgba(255, 43, 133,1)"]; // out
+      this.sexColorTwo = ["rgba(5, 151, 252, 0.16)", "rgba(255, 43, 133,0.16)"]; //in
       this.natureColorOne = ["rgba(0, 217, 153,1)", "rgba(255, 228, 0,1)"];
       this.natureColorTwo = [
         "rgba(0, 217, 153, 0.16)",
         "rgba(255, 228, 0,0.16)",
       ];
       this.nationColorOne = ["rgba(18, 91, 255, 1)", "rgba(26, 251, 255,1)"];
-      this.nationColorTwo = ["rgba(18, 91, 255,0.16)", "rgba(26, 251, 255,0.16)"];
+      this.nationColorTwo = ["rgba(18, 91, 255,0.16)","rgba(26, 251, 255,0.16)",];
 
-      this.flag = true
+      this.flag = true;
+    },
+    setBarData() {
+      this.fileData = [
+        {
+          name: "20210302",
+          in: 565,
+          out: 333,
+        },
+        {
+          name: "20210402",
+          in: 565,
+          out: 333,
+        },
+        {
+          name: "20210402",
+          in: 565,
+          out: 333,
+        },
+        {
+          name: "20210402",
+          in: 565,
+          out: 333,
+        },
+        {
+          name: "20210402",
+          in: 565,
+          out: 333,
+        },
+        {
+          name: "20210402",
+          in: 565,
+          out: 333,
+        },
+        {
+          name: "20210402",
+          in: 565,
+          out: 333,
+        },
+      ],
+        this.$nextTick(() => {
+          this.showBar = true;
+        });
     },
   },
 };
@@ -269,14 +355,15 @@ export default {
   height: auto;
   font-family: SourceHanSansCN-Bold;
   font-size: 28px;
+  line-height: 30px;
   font-weight: bold;
   font-stretch: normal;
   letter-spacing: 1px;
   color: #ffffff;
-  box-shadow: 0px 2px 3px 0px rgba(0, 15, 57, 0.63);
   background: linear-gradient(to bottom, white, #44a5eb);
   -webkit-background-clip: text;
   color: transparent;
+  margin-top: 14px;
 }
 .picker {
   width: 223px;
@@ -343,7 +430,20 @@ export default {
   margin-left: 31px;
   color: white;
 }
-
+.mapTop {
+  height: 640px;
+}
+.mapBottom {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  color: #5ebdff;
+}
+.panel_box{
+  height: 176px;
+  display: flex;
+  flex-direction: row;
+}
 /* 右边三个图表 */
 .right {
   width: 540px;

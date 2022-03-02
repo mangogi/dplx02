@@ -6,60 +6,73 @@
 
 <script>
 export default {
-  name: "bar",
+  name: "verticalBar",
+  props: {
+    barData: {
+      type: Array,
+      default: () => {
+        return [
+          {
+            name: "20210302",
+            in: 565,
+            out: 333,
+          },
+          {
+            name: "20210402",
+            in: 565,
+            out: 333,
+          },
+          {
+            name: "20210402",
+            in: 565,
+            out: 333,
+          },
+          {
+            name: "20210402",
+            in: 565,
+            out: 333,
+          },
+          {
+            name: "20210402",
+            in: 565,
+            out: 333,
+          },
+          {
+            name: "20210402",
+            in: 565,
+            out: 333,
+          },
+          {
+            name: "20210402",
+            in: 565,
+            out: 333,
+          },
+        ]
+      },
+    },
+  },
   data() {
     return {};
   },
   mounted() {
-    this.test();
+    this.chartsInit();
   },
   methods: {
-    test() {
+    chartsInit() {
       const chart = this.$refs.chart;
       if (chart) {
-        const myChart = this.$echarts.init(chart);
-        var data = [
-          {
-            name: "11",
-            value: 565,
-          },
-          {
-            name: "22",
-            value: 878,
-          },
-          {
-            name: "33",
-            value: 813,
-          },
-          {
-            name: "44",
-            value: 800,
-          },
-          {
-            name: "55",
-            value: 800,
-          },
-          {
-            name: "66",
-            value: 800,
-          },
-          {
-            name: "77",
-            value: 800,
-          },
-        ];
+        let myChart = this.$echarts.init(chart);
         var xData = [],
-          yData = [];
+          firstData = [],
+          secondData = [];
+
         var min = 0; // 最小值的定义
-        data.map(function (a, b) {
-          xData.push(a.name);
-          if (a.value === 0) {
-            yData.push(a.value + min);
-          } else {
-            yData.push(a.value);
-          }
-          // yData.push((Math.random(0,1) * 100).toFixed(0));
-        });
+        console.log(this.barData);
+        for (let i = 0; i < this.barData.length; i++) {
+          xData.push(this.barData[i].name);
+          firstData.push(this.barData[i].in);
+          secondData.push(this.barData[i].out);
+        }
         const option = {
           tooltip: {
             trigger: "axis",
@@ -70,16 +83,27 @@ export default {
               },
             },
             formatter: function (prams) {
-              if (prams[0].data === min) {
-                return "合格率：0%";
-              } else {
-                return "合格率：" + prams[0].data + "%";
-              }
+              console.log("param", prams);
+              return (
+                "接受量：" +
+                prams[0].data +
+                "%" +
+                "<br>" +
+                "转出率：" +
+                prams[1].data +
+                "%"
+              );
             },
           },
           legend: {
             data: ["接收量", "转出量"],
+            top: "4%",
             show: true,
+            itemWidth: 10,
+            itemHeight: 10,
+            textStyle: {
+              color: "#ffffff",
+            },
           },
           grid: {
             left: "0%",
@@ -87,7 +111,7 @@ export default {
             bottom: "5%",
             top: "20%",
             height: "80%",
-            width:"90%",
+            width: "90%",
             containLabel: true,
             z: 22,
           },
@@ -99,8 +123,9 @@ export default {
               axisTick: {
                 alignWithLabel: true,
               },
-              splitLine:{
-                show:true,
+              splitNumber:9,
+              splitLine: {
+                show: true,
                 lineStyle: {
                   color: "#1C4666",
                 },
@@ -113,15 +138,21 @@ export default {
               axisLabel: {
                 show: true,
                 color: "rgb(170,170,170)",
-                fontSize: 16,
+                fontSize: 12,
+                rotate:20,
+                
               },
             },
           ],
           yAxis: [
             {
               type: "value",
+              name: "单位（万次）",
+              nameTextStyle: {
+                color: "rgb(170,170,170)",
+              },
               gridIndex: 0,
-              splitNumber:6,
+              splitNumber: 6,
               splitLine: {
                 show: true,
                 lineStyle: {
@@ -194,7 +225,7 @@ export default {
                   ]),
                 },
               },
-              data: yData,
+              data: firstData,
               zlevel: 11,
             },
             {
@@ -216,7 +247,8 @@ export default {
                   //       color: "#deac00",
                   //     },
                   //   ]),
-                  color: {              //好像不能够同时使用this.$echarts.graphic ,后设置的颜色会把前面的覆盖掉
+                  color: {
+                    //好像不能够同时使用this.$echarts.graphic ,后设置的颜色会把前面的覆盖掉
                     type: "linear",
                     x: 0,
                     y: 0,
@@ -235,24 +267,9 @@ export default {
                   },
                 },
               },
-              data: yData,
+              data: secondData,
               zlevel: 11,
             },
-            // {
-            //     name: '背景',
-            //     type: 'bar',
-            //     barWidth: '50%',
-            //     xAxisIndex: 0,
-            //     yAxisIndex: 1,
-            //     barGap: '-135%',
-            //     data: [100, 100, 100, 100, 100, 100, 100],
-            //     itemStyle: {
-            //         normal: {
-            //             color: 'rgba(255,255,255,0.1)'
-            //         }
-            //     },
-            //     zlevel: 9
-            // },
           ],
         };
 
