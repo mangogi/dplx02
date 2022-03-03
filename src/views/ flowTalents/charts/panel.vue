@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="title_body" :class="{marginLeft:!showPic}">
-        <img :src="imgurl" width="16px" height="16px" v-if="showPic"> {{provinceData.name}}
+        <img :src="img" class="img" v-if="showPic"> {{provinceData.name}}
     </span>
     <div class="charts" ref="chart"></div>
     <span class="number_tip">{{provinceData.num}}</span>
@@ -32,18 +32,25 @@ export default {
   data() {
     return {
         showPic:true,
+        img:'',
     };
   },
   mounted() {
     this.chartsInit();
     this.getUrl()
   },
+  beforeDestory() {
+    this.$echarts.dispose(this.myChart);
+    this.myChart = null;
+  },
   methods: {
     getUrl(){
-        console.log(this.imgurl)
         if(this.imgurl == ''){
             this.showPic = false
+            this.img = ''
+            
         }else{
+          this.img = require('../../../assets/imgs/'+this.imgurl+'.png')
             this.showPic = true
         }
     },
@@ -193,21 +200,13 @@ export default {
         };
 
         myChart.setOption(option);
-        window.addEventListener("resize", function () {
-          myChart.resize();
-        });
       }
-      this.$on("hook:destroyed", () => {
-        window.removeEventListener("resize", function () {
-          myChart.resize();
-        });
-      });
     },
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .charts {
   width: 130px;
   height: 150px;
@@ -217,6 +216,10 @@ export default {
     font-size: 14px;
     margin-left: 30px;
     color: #fff;
+    .img{
+      width: 16px;
+      height: 16px;
+    }
 }
 .number_tip{
     font-size: 16px;

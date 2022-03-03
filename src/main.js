@@ -5,6 +5,9 @@ import App from './App'
 //引入echarts
 import * as echarts from 'echarts'
 
+import less from 'less'
+
+Vue.use(less)
 Vue.config.productionTip = false
 
 Vue.prototype.$echarts = echarts

@@ -1,4 +1,5 @@
 <template>
+  <screen-adapter>
   <div class="main">
     <!-- 页面顶部 -->
     <div class="top">
@@ -54,7 +55,7 @@
           <pie
             class="chartsSex chartsWidth"
             :pieData="sexData"
-            :iconUrl="sexUrl"
+            :iconUrl="'xingbietongji'"
             :outColor="sexColorOne"
             :innerColor="sexColorTwo"
             v-if="flag"
@@ -72,6 +73,7 @@
             <div class="titletext">学历分布</div>
           </div>
           <!-- 学历分布漏斗图 -->
+          <pyramid></pyramid>
         </div>
       </div>
 
@@ -83,12 +85,12 @@
         <div class="mapBottom">
           <p>转移排行</p>
           <div class="panel_box">
-            <panel :provinceData="provinceData[0]" :imgurl="redlogo" v-if="showPanel"></panel>
-          <panel :provinceData="provinceData[1]" :imgurl="yellowlogo" v-if="showPanel"></panel>
-          <panel :provinceData="provinceData[2]" :imgurl="greenlogo" v-if="showPanel"></panel>
-          <panel :provinceData="provinceData[3]" :imgurl="''" v-if="showPanel"></panel>
-          <panel :provinceData="provinceData[4]" :imgurl="''" v-if="showPanel"></panel>
-          <panel :provinceData="provinceData[5]" :imgurl="''" v-if="showPanel"></panel>
+            <panel :provinceData="provinceData[0]" :imgurl="'location-full'"></panel>
+          <panel :provinceData="provinceData[1]" :imgurl="'location-full-2'"></panel>
+          <panel :provinceData="provinceData[2]" :imgurl="'location-full-3'"></panel>
+          <panel :provinceData="provinceData[3]" :imgurl="''" ></panel>
+          <panel :provinceData="provinceData[4]" :imgurl="''" ></panel>
+          <panel :provinceData="provinceData[5]" :imgurl="''"></panel>
           </div>
           
         </div>
@@ -103,7 +105,7 @@
           <pie
             class="chartsSex chartsWidth"
             :pieData="natureData"
-            :iconUrl="natureUrl"
+            :iconUrl="'存档性质分析'"
             :outColor="natureColorOne"
             :innerColor="natureColorTwo"
             v-if="flag"
@@ -117,7 +119,7 @@
           <pie
             class="chartsSex chartsWidth"
             :pieData="nationData"
-            :iconUrl="nationUrl"
+            :iconUrl="'存档民族分析'"
             :outColor="nationColorOne"
             :innerColor="nationColorTwo"
             v-if="flag"
@@ -139,6 +141,7 @@
 
     <!-- <bar></bar> -->
   </div>
+  </screen-adapter>
 </template>
 
 <script>
@@ -147,7 +150,10 @@ import TopBox from "./charts/TopBox.vue";
 import Pie from "./charts/pie.vue";
 import VerticalBar from "./charts/verticalBar.vue";
 import Panel from "./charts/panel.vue";
+import ScreenAdapter from './charts/ScreenAdapter.vue'
+import pyramid from './charts/newPyramid.vue'
 
+// 饮用component组件 用@
 export default {
   name: " MainPage",
   components: {
@@ -156,6 +162,8 @@ export default {
     Pie,
     VerticalBar,
     Panel,
+    ScreenAdapter,
+    pyramid,
   },
   data() {
     return {
@@ -260,11 +268,6 @@ export default {
       this.nationUrl = require("../../assets/imgs/存档民族分析.png");
       this.natureUrl = require("../../assets/imgs/存档性质分析.png");
 
-      // panel 组件图片处理
-      this.redlogo = require('../../assets/imgs/location-full.png')
-      this.yellowlogo = require('../../assets/imgs/location-full-2.png')
-      this.greenlogo = require('../../assets/imgs/location-full-3.png')
-      this.showPanel = true
     },
     /**
      * 设置饼图的颜色
@@ -329,7 +332,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="less">
 /*  页面样式*/
 .main {
   width: 1920px;
@@ -388,9 +391,12 @@ export default {
 .bottom {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  height: 500px;
 }
 .left {
   width: 540px;
+  height: 460px;
 }
 .titlebar {
   width: 517px;
@@ -436,6 +442,7 @@ export default {
 .mapBottom {
   display: flex;
   flex-direction: column;
+  height: 170px;
   font-size: 16px;
   color: #5ebdff;
 }

@@ -45,6 +45,7 @@ export default {
     setPie() {
       const pieData = this.pieData;
       const chart = this.$refs.chart;
+      let imgurl = require('../../../assets/imgs/'+ this.iconUrl + '.png')
       if (chart) {
         this.myChart = this.$echarts.init(chart);
         const option = {
@@ -56,7 +57,7 @@ export default {
                 top: "39%",
                 z: 3,
                 style: {
-                  image: this.iconUrl,
+                  image: imgurl,
                   width: 36,
                   height: 36,
                 },
@@ -194,15 +195,7 @@ export default {
         };
 
         this.myChart.setOption(option);
-        window.addEventListener("resize", function () {
-          this.myChart.resize();
-        });
       }
-      // this.$on("hook:destroyed", () => {
-      //   window.removeEventListener("resize", function () {
-      //     this.myChart.resize();
-      //   });
-      // });
     },
   },
   beforeDestory() {

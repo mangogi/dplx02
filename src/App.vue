@@ -16,5 +16,8 @@ export default {
 </script>
 
 <style>
-
+/* 高100% */
+#app{
+  height: 100%;
+}
 </style>
