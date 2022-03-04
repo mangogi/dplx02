@@ -80,7 +80,7 @@ export default {
             top: "-10%",
             left: "7%",
             orient: "horizontal",
-            itemGap: 160,
+            itemGap: 210,
             itemWidth: 56,
             itemHeight: 5,
             textStyle: {
@@ -91,7 +91,7 @@ export default {
               let pieDataReverse = pieData.reverse();
               for (let i = 0; i < pieDataReverse.length; i++) {
                 if (pieDataReverse[i].name == params) {
-                  return "\n\n\n\n\n\n" + "{sex|" + params + "}" + '\n' +'{num|'+pieDataReverse[i].val + '}' + '{person|'+ '人'+ '}' + '\n' + '{pecent|' + pieDataReverse[i].per + '}'
+                  return "\n\n\n\n\n\n\n\n\n" + "{sex|" + params + "}" + '\n' +'{num|'+pieDataReverse[i].val + '}' + '{person|'+ '人'+ '}' + '\n' + '{pecent|' + pieDataReverse[i].per + '}'
                 }
               }
             },
@@ -102,7 +102,7 @@ export default {
                 sex: {
                   color: 'white',
                   fontSize: 16,
-                  padding: [30, 0, 0, 0], //上 右 下 左
+                  padding: [10, 0, 0, 0], //上 右 下 左
                 },
                 num: {
                   color: "white",
@@ -111,7 +111,7 @@ export default {
                 },
                 person: {
                   fontSize: 14,
-                  padding: [5, 0, 0, 10],
+                  padding: [-9, 0, 0, 10],
                 },
                 percent: {
                   fontSize: 14,
@@ -207,7 +207,7 @@ export default {
 
 <style scoped>
 .charts {
-  width: 517px;
+  width: 500px;
   height: 188px;
 }
 </style>

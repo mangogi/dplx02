@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import echarts from "echarts";
 export default {
   name: "verticalBar",
   props: {
@@ -47,7 +48,7 @@ export default {
             in: 565,
             out: 333,
           },
-        ]
+        ];
       },
     },
   },
@@ -123,7 +124,7 @@ export default {
               axisTick: {
                 alignWithLabel: true,
               },
-              splitNumber:9,
+              splitNumber: 9,
               splitLine: {
                 show: true,
                 lineStyle: {
@@ -139,8 +140,7 @@ export default {
                 show: true,
                 color: "rgb(170,170,170)",
                 fontSize: 12,
-                rotate:20,
-                
+                rotate: 20,
               },
             },
           ],
@@ -174,34 +174,6 @@ export default {
                 formatter: "{value}",
               },
             },
-            // {
-            //   type: "value",
-            //   gridIndex: 0,
-            //   min: min,
-            //   max: 100,
-            //   splitNumber: 6,
-            //   splitLine: {
-            //     show: true,
-            //     lineStyle: {
-            //       color: "#1C4666",
-            //     },
-            //   },
-            //   axisLine: {
-            //     show: false,
-            //   },
-            //   axisTick: {
-            //     show: false,
-            //   },
-            //   axisLabel: {
-            //     show: false,
-            //   },
-            //   splitArea: {
-            //     show: true,
-            //     areaStyle: {
-            //       color: ["rgba(0, 102, 255, 0.04)", "rgba(0, 102, 255, 0.04)"],
-            //     },
-            //   },
-            // },
           ],
           series: [
             {
@@ -212,8 +184,8 @@ export default {
               yAxisIndex: 0,
               itemStyle: {
                 normal: {
-                  borderRadius: [30, 30, 0, 0],
-                  color: this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  barBorderRadius: [30, 30, 0, 0],
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                     {
                       offset: 0,
                       color: "rgba(76,215,255,1)",
@@ -236,8 +208,26 @@ export default {
               yAxisIndex: 0,
               itemStyle: {
                 normal: {
-                  borderRadius: [30, 30, 0, 0],
-                  //   color: this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  barBorderRadius: [30, 30, 0, 0],
+                  // 版本4.9 要使用这个来设置渐变色
+                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                    {
+                      offset: 0,
+                      color: "#fff82e",
+                    },
+                    {
+                      offset: 1,
+                      color: "#deac00",
+                    },
+                  ]),
+                  // color: {
+                  //   //好像不能够同时使用this.$echarts.graphic ,后设置的颜色会把前面的覆盖掉
+                  //   type: "linear",
+                  //   x: 0,
+                  //   y: 0,
+                  //   x2: 0,
+                  //   y2: 1,
+                  //   colorStops: [
                   //     {
                   //       offset: 0,
                   //       color: "#fff82e",
@@ -246,25 +236,8 @@ export default {
                   //       offset: 1,
                   //       color: "#deac00",
                   //     },
-                  //   ]),
-                  color: {
-                    //好像不能够同时使用this.$echarts.graphic ,后设置的颜色会把前面的覆盖掉
-                    type: "linear",
-                    x: 0,
-                    y: 0,
-                    x2: 0,
-                    y2: 1,
-                    colorStops: [
-                      {
-                        offset: 0,
-                        color: "#fff82e",
-                      },
-                      {
-                        offset: 1,
-                        color: "#deac00",
-                      },
-                    ],
-                  },
+                  //   ],
+                  // },
                 },
               },
               data: secondData,
@@ -290,7 +263,7 @@ export default {
 
 <style scoped>
 .charts {
-  width: 547px;
+  width: 500px;
   height: 228px;
 }
 </style>

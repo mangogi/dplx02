@@ -97,7 +97,7 @@ export default {
           series: [
             {
             type: 'gauge',
-            radius: '118%',
+            radius: '65%',
             clockwise: false,
             startAngle: '90',
             endAngle: '-269.9999',
@@ -142,7 +142,7 @@ export default {
               type: "pie",
               startAngle: 90,
               clockWise: false,
-              radius: ["53%", "56%"],
+              radius: ["58%", "63%"],
               itemStyle: {
                 normal: {
                   label: {

@@ -20,10 +20,10 @@ export default {
         { value: 80, name: "中专及以下" },
         { value: 100, name: "专科" },
       ];
-      let percentData = datas.forEach(item => { 
-          let s = 0
-          s += item.value
-          })
+      let all = 0;
+      datas.forEach((item) => {
+        return (all = all + item.value);
+      });
       const pyramid = this.$refs.pyramid;
       let chart = this.$echarts.init(pyramid);
       var colorList = ["#8bfffd", "#3de6e3", "#3bbcd9", "#378acc", "#345ec0"];
@@ -44,15 +44,32 @@ export default {
             gap: 0,
             label: {
               normal: {
-                formatter: "{b}",
+                hight: 30,
                 fontSize: 14,
                 color: "#fff",
                 formatter: function (params) {
-                  return "{name|" + params.name + "}" + "\n" + params.value  
+                  return (
+                    "{name|" +
+                    params.name +
+                    "}" +
+                    "\n" +
+                    "{val|" +
+                    params.value +
+                    "   " +
+                    ((params.value / all) * 100).toFixed(2) +
+                    "%" +
+                    "}"
+                  );
                 },
                 rich: {
                   name: {
                     color: "#5cbcff",
+                    fontSize: 14,
+                    padding: [2, 0, 0, 0],
+                  },
+                  val: {
+                    fontSize: 14,
+                    padding: [3, 0, 4, 0],
                   },
                 },
               },
@@ -70,7 +87,7 @@ export default {
               },
               rotate: -32,
             },
-            data: datas
+            data: datas,
           },
           {
             name: "",
@@ -81,6 +98,9 @@ export default {
             sort: "ascending",
             gap: 0,
             label: {
+              show: false,
+            },
+            labelLine: {
               show: false,
             },
             itemStyle: {

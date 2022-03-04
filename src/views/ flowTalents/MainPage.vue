@@ -1,146 +1,183 @@
 <template>
   <screen-adapter>
-  <div class="main">
-    <!-- 页面顶部 -->
-    <div class="top">
-      <div class="picker">新疆维吾尔自治区</div>
-      <div class="title">流动人员档案情况分析</div>
-      <div class="picker">日期选择器</div>
-    </div>
-    <!-- 页面中部四个方块部分 -->
-    <div class="center">
-      <top-box
-        :num="dajslArr"
-        title="档案总存档"
-        :down="down"
-        :up="up"
-        :imgurl="allImg"
-      >
-      </top-box>
-      <top-box
-        :num="dajslArr"
-        title="档案接受量"
-        :down="down"
-        :up="up"
-        :imgurl="receiveImg"
-      >
-      </top-box>
-      <top-box
-        :num="dajslArr"
-        title="档案借阅量"
-        :down="down"
-        :up="up"
-        :imgurl="rendImg"
-      >
-      </top-box>
-      <top-box
-        :num="dajslArr"
-        title="档案转出量"
-        :down="down"
-        :up="up"
-        :imgurl="outImg"
-      >
-      </top-box>
-    </div>
-    <!-- 四个方块以下部分 -->
-    <div class="bottom">
-      <!-- 左边三个图表 -->
-      <div class="left">
-        <!-- 性别分布饼图 -->
-        <div class="leftTop">
-          <div class="titlebar pos">
-            <div class="titletext">性别分布</div>
-          </div>
+    <div class="main">
+      <!-- 页面顶部 -->
+      <div class="top">
+        <div class="picker">新疆维吾尔自治区</div>
+        <div class="title">流动人员档案情况分析</div>
+        <div class="picker">日期选择器</div>
+      </div>
+      <!-- 页面中部四个方块部分 -->
+      <div class="center">
+        <top-box
+          :num="dajslArr"
+          title="档案总存档"
+          :down="down"
+          :up="up"
+          :imgurl="allImg"
+        >
+        </top-box>
+        <top-box
+          :num="dajslArr"
+          title="档案接受量"
+          :down="down"
+          :up="up"
+          :imgurl="receiveImg"
+        >
+        </top-box>
+        <top-box
+          :num="dajslArr"
+          title="档案借阅量"
+          :down="down"
+          :up="up"
+          :imgurl="rendImg"
+        >
+        </top-box>
+        <top-box
+          :num="dajslArr"
+          title="档案转出量"
+          :down="down"
+          :up="up"
+          :imgurl="outImg"
+        >
+        </top-box>
+      </div>
+      <!-- 四个方块以下部分 -->
+      <div class="bottom">
+        <!-- 左边三个图表 -->
+        <div class="left">
           <!-- 性别分布饼图 -->
-          <pie
-            class="chartsSex chartsWidth"
-            :pieData="sexData"
-            :iconUrl="'xingbietongji'"
-            :outColor="sexColorOne"
-            :innerColor="sexColorTwo"
-            v-if="flag"
-          ></pie>
-        </div>
-        <div class="leftCenter">
-          <div class="titlebar pos">
-            <div class="titletext">年龄分布</div>
+          <div class="leftTop">
+            <div class="titlebar pos">
+              <div class="titletext">性别分布</div>
+            </div>
+            <!-- 性别分布饼图 -->
+            <pie
+              class="chartsSex chartsWidth"
+              :pieData="sexData"
+              :iconUrl="'xingbietongji'"
+              :outColor="sexColorOne"
+              :innerColor="sexColorTwo"
+              v-if="flag"
+            ></pie>
           </div>
-          <!-- 年龄分布条形图 -->
-          <bar class="chartsAge chartsWidth" :barData="ageData"></bar>
-        </div>
-        <div class="leftBottom">
-          <div class="titlebar pos">
-            <div class="titletext">学历分布</div>
+          <div class="leftCenter">
+            <div class="titlebar pos">
+              <div class="titletext">年龄分布</div>
+            </div>
+            <!-- 年龄分布条形图 -->
+            <bar class="chartsAge chartsWidth" :barData="ageData"></bar>
           </div>
-          <!-- 学历分布漏斗图 -->
-          <pyramid></pyramid>
+          <div class="leftBottom">
+            <div class="titlebar pos">
+              <div class="titletext">学历分布</div>
+            </div>
+            <!-- 学历分布漏斗图 -->
+            <pyramid></pyramid>
+          </div>
+        </div>
+
+        <!-- 中间地图部分 -->
+        <div class="mapBox">
+          <div class="mapTop">
+            <br />
+            <p class="map_title">劳动转移情况</p>
+            <div class="map_btnbox">
+              <button
+                class="map_btn"
+                :class="{ map_btn_selected: isSelected }"
+                @click="changeMap(0)"
+              >
+                转入
+              </button>
+              <button
+                class="map_btn"
+                :class="{ map_btn_selected: !isSelected }"
+                @click="changeMap(1)"
+              >
+                转出
+              </button>
+            </div>
+            <div class="legend_box">
+              <div class="legend_gap">
+                <div class="lenged_gap_green"></div>
+                <span>转入</span>
+              </div>
+              <div class="legend_gap">
+                <div class="lenged_gap_yellow"></div>
+                <span>转出</span>
+              </div>
+            </div>
+            <map-chart class="map_chart" v-if="isSelected"></map-chart>
+            <out-chart class="map_chart" v-if="!isSelected"></out-chart>
+          </div>
+          <div class="mapBottom">
+            <p>转移排行</p>
+            <div class="panel_box">
+              <panel
+                :provinceData="provinceData[0]"
+                :imgurl="'location-full'"
+              ></panel>
+              <panel
+                :provinceData="provinceData[1]"
+                :imgurl="'location-full-2'"
+              ></panel>
+              <panel
+                :provinceData="provinceData[2]"
+                :imgurl="'location-full-3'"
+              ></panel>
+              <panel :provinceData="provinceData[3]" :imgurl="''"></panel>
+              <panel :provinceData="provinceData[4]" :imgurl="''"></panel>
+              <panel :provinceData="provinceData[5]" :imgurl="''"></panel>
+            </div>
+          </div>
+        </div>
+        <!-- 右边三个图表 -->
+        <div class="right">
+          <div class="rightTop">
+            <div class="titlebar pos">
+              <div class="titletext">存档性质分析</div>
+            </div>
+            <!-- 存档性质分析饼图 -->
+            <pie
+              class="chartsSex chartsWidth"
+              :pieData="natureData"
+              :iconUrl="'存档性质分析'"
+              :outColor="natureColorOne"
+              :innerColor="natureColorTwo"
+              v-if="flag"
+            ></pie>
+          </div>
+          <div class="rightCenter">
+            <div class="titlebar pos">
+              <div class="titletext">存档名族分析</div>
+            </div>
+            <!-- 存档名族分析饼图 -->
+            <pie
+              class="chartsSex chartsWidth"
+              :pieData="nationData"
+              :iconUrl="'存档民族分析'"
+              :outColor="nationColorOne"
+              :innerColor="nationColorTwo"
+              v-if="flag"
+            ></pie>
+          </div>
+          <div class="rightBottom">
+            <div class="titlebar pos">
+              <div class="titletext">近六个月档案接收和转出情况</div>
+            </div>
+            <!-- 近6个月档案接收和转出情况 -->
+            <vertical-bar
+              v-if="showBar"
+              class="chartsSex chartsWidth"
+              :barData="fileData"
+            ></vertical-bar>
+          </div>
         </div>
       </div>
 
-      <!-- 中间地图部分 -->
-      <div class="mapBox">
-        <div class="mapTop">
-          <br />
-        </div>
-        <div class="mapBottom">
-          <p>转移排行</p>
-          <div class="panel_box">
-            <panel :provinceData="provinceData[0]" :imgurl="'location-full'"></panel>
-          <panel :provinceData="provinceData[1]" :imgurl="'location-full-2'"></panel>
-          <panel :provinceData="provinceData[2]" :imgurl="'location-full-3'"></panel>
-          <panel :provinceData="provinceData[3]" :imgurl="''" ></panel>
-          <panel :provinceData="provinceData[4]" :imgurl="''" ></panel>
-          <panel :provinceData="provinceData[5]" :imgurl="''"></panel>
-          </div>
-          
-        </div>
-      </div>
-      <!-- 右边三个图表 -->
-      <div class="right">
-        <div class="rightTop">
-          <div class="titlebar pos">
-            <div class="titletext">存档性质分析</div>
-          </div>
-          <!-- 存档性质分析饼图 -->
-          <pie
-            class="chartsSex chartsWidth"
-            :pieData="natureData"
-            :iconUrl="'存档性质分析'"
-            :outColor="natureColorOne"
-            :innerColor="natureColorTwo"
-            v-if="flag"
-          ></pie>
-        </div>
-        <div class="rightCenter">
-          <div class="titlebar pos">
-            <div class="titletext">存档名族分析</div>
-          </div>
-          <!-- 存档名族分析饼图 -->
-          <pie
-            class="chartsSex chartsWidth"
-            :pieData="nationData"
-            :iconUrl="'存档民族分析'"
-            :outColor="nationColorOne"
-            :innerColor="nationColorTwo"
-            v-if="flag"
-          ></pie>
-        </div>
-        <div class="rightBottom">
-          <div class="titlebar pos">
-            <div class="titletext">近六个月档案接收和转出情况</div>
-          </div>
-          <!-- 近6个月档案接收和转出情况 -->
-          <vertical-bar
-            v-if="showBar"
-            class="chartsSex chartsWidth"
-            :barData="fileData"
-          ></vertical-bar>
-        </div>
-      </div>
+      <!-- <bar></bar> -->
     </div>
-
-    <!-- <bar></bar> -->
-  </div>
   </screen-adapter>
 </template>
 
@@ -150,8 +187,10 @@ import TopBox from "./charts/TopBox.vue";
 import Pie from "./charts/pie.vue";
 import VerticalBar from "./charts/verticalBar.vue";
 import Panel from "./charts/panel.vue";
-import ScreenAdapter from './charts/ScreenAdapter.vue'
-import pyramid from './charts/newPyramid.vue'
+import ScreenAdapter from "./charts/ScreenAdapter.vue";
+import pyramid from "./charts/newPyramid.vue";
+import mapChart from "./charts/mapChart.vue";
+import outChart from "./charts/outChart.vue";
 
 // 饮用component组件 用@
 export default {
@@ -164,6 +203,8 @@ export default {
     Panel,
     ScreenAdapter,
     pyramid,
+    mapChart,
+    outChart,
   },
   data() {
     return {
@@ -208,18 +249,19 @@ export default {
       ],
       fileData: [],
       showBar: false,
-      provinceData:[
-        {name:'四川省',value:0.63,num:'8.8万人'},
-        {name:'天津市',value:0.63,num:'8.8万人'},
-        {name:'湖南省',value:0.63,num:'8.8万人'},
-        {name:'北京市',value:0.63,num:'8.8万人'},
-        {name:'上海市',value:0.63,num:'8.8万人'},
-        {name:'江苏省',value:0.63,num:'8.8万人'},
+      provinceData: [
+        { name: "四川省", value: 0.63, num: "8.8万人" },
+        { name: "天津市", value: 0.63, num: "8.8万人" },
+        { name: "湖南省", value: 0.63, num: "8.8万人" },
+        { name: "北京市", value: 0.63, num: "8.8万人" },
+        { name: "上海市", value: 0.63, num: "8.8万人" },
+        { name: "江苏省", value: 0.63, num: "8.8万人" },
       ],
-      redlogo:'',
-      yellowlogo:'',
-      greenlogo:'',
-      showPanel:false,
+      redlogo: "",
+      yellowlogo: "",
+      greenlogo: "",
+      showPanel: false,
+      isSelected: false, //按钮是佛选中
     };
   },
   mounted() {
@@ -229,6 +271,17 @@ export default {
     this.setBarData();
   },
   methods: {
+    /**
+     * 点击按钮切换map数据
+     * key: 0是转入 1是转出
+     */
+    changeMap(key) {
+      if (key == 0) {
+        this.isSelected = true;
+      } else {
+        this.isSelected = false;
+      }
+    },
     /**
      * 用于处理数据不满六位，头部添零
      */
@@ -262,12 +315,6 @@ export default {
       this.receiveImg = require("../../assets/imgs/档案接受量.png");
       this.rendImg = require("../../assets/imgs/档案借阅量.png");
       this.outImg = require("../../assets/imgs/档案转出量.png");
-
-      // pie组件的图片路径处理
-      this.sexUrl = require("../../assets/imgs/xingbietongji.png");
-      this.nationUrl = require("../../assets/imgs/存档民族分析.png");
-      this.natureUrl = require("../../assets/imgs/存档性质分析.png");
-
     },
     /**
      * 设置饼图的颜色
@@ -281,12 +328,15 @@ export default {
         "rgba(255, 228, 0,0.16)",
       ];
       this.nationColorOne = ["rgba(18, 91, 255, 1)", "rgba(26, 251, 255,1)"];
-      this.nationColorTwo = ["rgba(18, 91, 255,0.16)","rgba(26, 251, 255,0.16)",];
+      this.nationColorTwo = [
+        "rgba(18, 91, 255,0.16)",
+        "rgba(26, 251, 255,0.16)",
+      ];
 
       this.flag = true;
     },
     setBarData() {
-      this.fileData = [
+      (this.fileData = [
         {
           name: "20210302",
           in: 565,
@@ -322,7 +372,7 @@ export default {
           in: 565,
           out: 333,
         },
-      ],
+      ]),
         this.$nextTick(() => {
           this.showBar = true;
         });
@@ -341,7 +391,7 @@ export default {
 }
 /* 标题部分 */
 .top {
-  width: 1920px;
+  width: 100%;
   height: 83px;
   background-image: url("../../assets/imgs/01.png");
   background-repeat: no-repeat;
@@ -399,7 +449,7 @@ export default {
   height: 460px;
 }
 .titlebar {
-  width: 517px;
+  width: 500px;
   height: 51px;
   background: linear-gradient(
     to right,
@@ -413,6 +463,7 @@ export default {
   margin-top: 13px;
 }
 .titletext {
+  width: 500px;
   height: 16px;
   font-family: MicrosoftYaHei;
   font-size: 16px;
@@ -428,29 +479,80 @@ export default {
 }
 
 .chartsWidth {
-  width: 517px;
+  width: 500px;
 }
 /* 地图部分 */
 .mapBox {
   width: 756px;
   margin-left: 31px;
-  color: white;
+  color: #5ebdff;
+  font-size: 16px;
 }
 .mapTop {
   height: 640px;
+  .map_btnbox {
+    display: flex;
+    flex-direction: row;
+    width: 200px;
+    .map_btn {
+      width: 64px;
+      height: 30px;
+      background-color: #081c3b;
+      border-radius: 2px;
+      border: solid 1px rgba(39, 123, 237);
+      color: #ffffff;
+      margin-right: 10px;
+      cursor: pointer;
+      z-index: 222;
+    }
+    .map_btn_selected {
+      background-color: #002b97;
+    }
+  }
+  .legend_box {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    color: #ffffff;
+    margin-top: 10px;
+    font-size: 14px;
+    .legend_gap {
+      width: 60px;
+      margin-right: 10px;
+      display: flex;
+      flex-direction: row;
+      .lenged_gap_green {
+        width: 8px;
+        height: 8px;
+        background-color: #1be7d4;
+        margin-top: 8px;
+        margin-right: 10px;
+      }
+      .lenged_gap_yellow {
+        width: 8px;
+        height: 8px;
+        background-color: #e7db1b;
+        margin-top: 8px;        //可以写成maxin
+        margin-right: 10px;
+      }
+    }
+  }
+  .map_chart {
+    margin-top: -70px;
+  }
 }
 .mapBottom {
   display: flex;
   flex-direction: column;
-  height: 170px;
-  font-size: 16px;
-  color: #5ebdff;
+  height: 200px;
+  margin-top: -40px;
+  .panel_box {
+    height: 176px;
+    display: flex;
+    flex-direction: row;
+  }
 }
-.panel_box{
-  height: 176px;
-  display: flex;
-  flex-direction: row;
-}
+
 /* 右边三个图表 */
 .right {
   width: 540px;

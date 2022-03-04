@@ -127,7 +127,7 @@ export default {
                 },
               },
               data: [
-                50000000, 22000000, 10000000, 5000000, 1, 5000000, 5000000,
+                50000000, 22000000, 10000000, 5000000, 1000000, 5000000, 5000000,
               ],
             },
           ],
@@ -138,7 +138,8 @@ export default {
               zlevel: 1,
               itemStyle: {
                 normal: {
-                  borderRadius: [0,30,30,0],
+                  // borderRadius: [0,30,30,0],
+                  barBorderRadius:[0,30,30,0],
                   // color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
                   //     offset: 0,
                   //     color: 'rgb(57,89,255,1)'
@@ -170,15 +171,7 @@ export default {
           ],
         };
         myChart.setOption(option);
-        window.addEventListener("resize", function () {
-          myChart.resize();
-        });
       }
-      this.$on("hook:destroyed", () => {
-        window.removeEventListener("resize", function () {
-          myChart.resize();
-        });
-      });
     },
   },
 };
