@@ -10,20 +10,20 @@ export default {
   props: {
     width: {
       type: String,
-      default: '1920',
+      default: '1920'
     },
     height: {
       type: String,
-      default: '1080',
-    },
+      default: '1080'
+    }
   },
   data () {
     return {
       style: {
         width: this.width + 'px',
         height: this.height + 'px',
-        transform: 'scale(1) translate(-50%, -50%)',
-      },
+        transform: 'scale(1) translate(-50%, -50%)'
+      }
     }
   },
   mounted () {
@@ -55,8 +55,8 @@ export default {
     // 设置比例
     setScale () {
       this.style.transform = 'scale(' + this.getScale() + ') translate(-50%, -50%)'
-    },
-  },
+    }
+  }
 }
 </script>
 <style scoped>

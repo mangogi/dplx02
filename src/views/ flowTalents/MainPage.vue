@@ -182,19 +182,19 @@
 </template>
 
 <script>
-import Bar from "./charts/bar.vue";
-import TopBox from "./charts/TopBox.vue";
-import Pie from "./charts/pie.vue";
-import VerticalBar from "./charts/verticalBar.vue";
-import Panel from "./charts/panel.vue";
-import ScreenAdapter from "./charts/ScreenAdapter.vue";
-import pyramid from "./charts/newPyramid.vue";
-import mapChart from "./charts/mapChart.vue";
-import outChart from "./charts/outChart.vue";
+import Bar from './charts/bar.vue'
+import TopBox from './charts/TopBox.vue'
+import Pie from './charts/pie.vue'
+import VerticalBar from './charts/verticalBar.vue'
+import Panel from './charts/panel.vue'
+import ScreenAdapter from './charts/ScreenAdapter.vue'
+import pyramid from './charts/newPyramid.vue'
+import mapChart from './charts/mapChart.vue'
+import outChart from './charts/outChart.vue'
 
 // 饮用component组件 用@
 export default {
-  name: " MainPage",
+  name: 'MainPage',
   components: {
     Bar,
     TopBox,
@@ -204,181 +204,182 @@ export default {
     ScreenAdapter,
     pyramid,
     mapChart,
-    outChart,
+    outChart
   },
-  data() {
+  data () {
     return {
-      dajsl: 46199, //档案接收量
-      dajslArr: [], //档案接收量数组
-      up: "+2.56%", //增长比例
-      down: "-2.56%", //下降比例
-      allImg: "", //档案总存档图标路径
-      receiveImg: "", //档案接收量图标路径
-      rendImg: "", //档案租借量图标路径
-      outImg: "", //档案转出量图标路径
+      dajsl: 46199, // 档案接收量
+      dajslArr: [], // 档案接收量数组
+      up: '+2.56%', // 增长比例
+      down: '-2.56%', // 下降比例
+      allImg: '', // 档案总存档图标路径
+      receiveImg: '', // 档案接收量图标路径
+      rendImg: '', // 档案租借量图标路径
+      outImg: '', // 档案转出量图标路径
       sexData: [
-        { name: "男性", val: "245678", per: "50.00%" },
-        { name: "女性", val: "240078", per: "50.00%" },
-      ], //性别饼图数据
+        { name: '男性', val: '245678', per: '50.00%' },
+        { name: '女性', val: '240078', per: '50.00%' }
+      ], // 性别饼图数据
       nationData: [
-        { name: "汉族", val: "245678", per: "50.00%" },
-        { name: "少数名族", val: "240078", per: "50.00%" },
-      ], //民族饼图数据
+        { name: '汉族', val: '245678', per: '50.00%' },
+        { name: '少数名族', val: '240078', per: '50.00%' }
+      ], // 民族饼图数据
       natureData: [
-        { name: "个人存档", val: "245678", per: "50.00%" },
-        { name: "企业存档", val: "180078", per: "50.00%" },
-      ], //性质饼图数据
-      bgUrl: "", //
-      sexUrl: "",
-      nationUrl: "",
-      natureUrl: "",
+        { name: '个人存档', val: '245678', per: '50.00%' },
+        { name: '企业存档', val: '180078', per: '50.00%' }
+      ], // 性质饼图数据
+      bgUrl: '', //
+      sexUrl: '',
+      nationUrl: '',
+      natureUrl: '',
       sexColorOne: [],
       sexColorTwo: [],
       nationColorOne: [],
       nationColorTwo: [],
       natureColorOne: [],
       natureColorTwo: [],
-      flag: false, //为了解决页面加载完成了 但是数据没有传到子组件的问题
+      flag: false, // 为了解决页面加载完成了 但是数据没有传到子组件的问题
       ageData: [
-        { name: "60岁以上", value: "1234", per: "12%" },
-        { name: "50～59", value: "1234", per: "12%" },
-        { name: "40～49", value: "1234", per: "12%" },
-        { name: "30～39", value: "1234", per: "12%" },
-        { name: "20～29", value: "1234", per: "12%" },
-        { name: "20及以下", value: "1234", per: "12%" },
+        { name: '60岁以上', value: '1234', per: '12%' },
+        { name: '50～59', value: '1234', per: '12%' },
+        { name: '40～49', value: '1234', per: '12%' },
+        { name: '30～39', value: '1234', per: '12%' },
+        { name: '20～29', value: '1234', per: '12%' },
+        { name: '20及以下', value: '1234', per: '12%' }
       ],
       fileData: [],
       showBar: false,
       provinceData: [
-        { name: "四川省", value: 0.63, num: "8.8万人" },
-        { name: "天津市", value: 0.63, num: "8.8万人" },
-        { name: "湖南省", value: 0.63, num: "8.8万人" },
-        { name: "北京市", value: 0.63, num: "8.8万人" },
-        { name: "上海市", value: 0.63, num: "8.8万人" },
-        { name: "江苏省", value: 0.63, num: "8.8万人" },
+        { name: '四川省', value: 0.63, num: '8.8万人' },
+        { name: '天津市', value: 0.63, num: '8.8万人' },
+        { name: '湖南省', value: 0.63, num: '8.8万人' },
+        { name: '北京市', value: 0.63, num: '8.8万人' },
+        { name: '上海市', value: 0.63, num: '8.8万人' },
+        { name: '江苏省', value: 0.63, num: '8.8万人' }
       ],
-      redlogo: "",
-      yellowlogo: "",
-      greenlogo: "",
+      redlogo: '',
+      yellowlogo: '',
+      greenlogo: '',
       showPanel: false,
-      isSelected: false, //按钮是佛选中
-    };
+      isSelected: false // 按钮是佛选中
+    }
   },
-  mounted() {
-    this.arrSet();
-    this.imgUrlSet();
-    this.setColor();
-    this.setBarData();
+  mounted () {
+    this.arrSet()
+    this.imgUrlSet()
+    this.setColor()
+    this.setBarData()
   },
   methods: {
     /**
      * 点击按钮切换map数据
      * key: 0是转入 1是转出
      */
-    changeMap(key) {
-      if (key == 0) {
-        this.isSelected = true;
+    changeMap (key) {
+      if (key === 0) {
+        this.isSelected = true
       } else {
-        this.isSelected = false;
+        this.isSelected = false
       }
     },
     /**
      * 用于处理数据不满六位，头部添零
      */
-    arrSet() {
-      const counts = this.dajsl.toString().split(""); //将数字转位数组
-      this.dajslArr = counts;
+    arrSet () {
+      const counts = this.dajsl.toString().split('')// 将数字转位数组
+      this.dajslArr = counts
       if (this.dajslArr.length < 6) {
-        if (this.dajslArr.length == 5) {
-          this.dajslArr.unshift("0");
+        if (this.dajslArr.length === 5) {
+          this.dajslArr.unshift('0')
         }
-        if (this.dajslArr.length == 4) {
-          this.dajslArr.unshift("0", "0");
+        if (this.dajslArr.length === 4) {
+          this.dajslArr.unshift('0', '0')
         }
-        if (this.dajslArr.length == 3) {
-          this.dajslArr.unshift("0", "0", "0");
+        if (this.dajslArr.length === 3) {
+          this.dajslArr.unshift('0', '0', '0')
         }
-        if (this.dajslArr.length == 2) {
-          this.dajslArr.unshift("0", "0", "0", "0");
+        if (this.dajslArr.length === 2) {
+          this.dajslArr.unshift('0', '0', '0', '0')
         }
-        if (this.dajslArr.length == 1) {
-          this.dajslArr.unshift("0", "0", "0", "0", "0");
+        if (this.dajslArr.length === 1) {
+          this.dajslArr.unshift('0', '0', '0', '0', '0')
         }
       }
     },
     /**
      * 处理图像路径 方便传参
      */
-    imgUrlSet() {
+    imgUrlSet () {
       // topBox 组件的图片
-      this.allImg = require("../../assets/imgs/档案总存档.png");
-      this.receiveImg = require("../../assets/imgs/档案接受量.png");
-      this.rendImg = require("../../assets/imgs/档案借阅量.png");
-      this.outImg = require("../../assets/imgs/档案转出量.png");
+      this.allImg = require('../../assets/imgs/档案总存档.png')
+      this.receiveImg = require('../../assets/imgs/档案接受量.png')
+      this.rendImg = require('../../assets/imgs/档案借阅量.png')
+      this.outImg = require('../../assets/imgs/档案转出量.png')
     },
     /**
      * 设置饼图的颜色
      */
-    setColor() {
-      this.sexColorOne = ["rgba(5, 151, 252,1)", "rgba(255, 43, 133,1)"]; // out
-      this.sexColorTwo = ["rgba(5, 151, 252, 0.16)", "rgba(255, 43, 133,0.16)"]; //in
-      this.natureColorOne = ["rgba(0, 217, 153,1)", "rgba(255, 228, 0,1)"];
+    setColor () {
+      this.sexColorOne = ['rgba(5, 151, 252,1)', 'rgba(255, 43, 133,1)'] // out
+      this.sexColorTwo = ['rgba(5, 151, 252, 0.16)', 'rgba(255, 43, 133,0.16)'] // in
+      this.natureColorOne = ['rgba(0, 217, 153,1)', 'rgba(255, 228, 0,1)']
       this.natureColorTwo = [
-        "rgba(0, 217, 153, 0.16)",
-        "rgba(255, 228, 0,0.16)",
-      ];
-      this.nationColorOne = ["rgba(18, 91, 255, 1)", "rgba(26, 251, 255,1)"];
+        'rgba(0, 217, 153, 0.16)',
+        'rgba(255, 228, 0,0.16)'
+      ]
+      this.nationColorOne = ['rgba(18, 91, 255, 1)', 'rgba(26, 251, 255,1)']
       this.nationColorTwo = [
-        "rgba(18, 91, 255,0.16)",
-        "rgba(26, 251, 255,0.16)",
-      ];
+        'rgba(18, 91, 255,0.16)',
+        'rgba(26, 251, 255,0.16)'
+      ]
 
-      this.flag = true;
+      this.flag = true
     },
-    setBarData() {
+    setBarData () {
+      // eslint-disable-next-line no-unused-expressions
       (this.fileData = [
         {
-          name: "20210302",
+          name: '20210302',
           in: 565,
-          out: 333,
+          out: 333
         },
         {
-          name: "20210402",
+          name: '20210402',
           in: 565,
-          out: 333,
+          out: 333
         },
         {
-          name: "20210402",
+          name: '20210402',
           in: 565,
-          out: 333,
+          out: 333
         },
         {
-          name: "20210402",
+          name: '20210402',
           in: 565,
-          out: 333,
+          out: 333
         },
         {
-          name: "20210402",
+          name: '20210402',
           in: 565,
-          out: 333,
+          out: 333
         },
         {
-          name: "20210402",
+          name: '20210402',
           in: 565,
-          out: 333,
+          out: 333
         },
         {
-          name: "20210402",
+          name: '20210402',
           in: 565,
-          out: 333,
-        },
-      ]),
-        this.$nextTick(() => {
-          this.showBar = true;
-        });
-    },
-  },
-};
+          out: 333
+        }
+      ])
+      this.$nextTick(() => {
+        this.showBar = true
+      })
+    }
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -391,7 +392,7 @@ export default {
 }
 /* 标题部分 */
 .top {
-  width: 100%;
+  width: 1910px;
   height: 83px;
   background-image: url("../../assets/imgs/01.png");
   background-repeat: no-repeat;

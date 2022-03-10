@@ -30,39 +30,41 @@
 
 <script>
 export default {
-  name: "TopBox",
+  name: 'TopBox',
   props: {
     num: {
       type: Array,
-      default: ["0"],
+      default: () => {
+        return ['0']
+      }
     },
     imgurl: {
       type: String,
-      default: "",
+      default: ''
     },
     title: {
       type: String,
-      default: "",
+      default: ''
     },
     up: {
       type: String,
-      default: "",
+      default: ''
     },
     down: {
       type: String,
-      default: "",
+      default: ''
     },
     keys: {
       type: String,
-      default: "",
-    },
+      default: ''
+    }
   },
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  mounted() {},
-  methods: {},
-};
+  mounted () {},
+  methods: {}
+}
 </script>
 
 <style>

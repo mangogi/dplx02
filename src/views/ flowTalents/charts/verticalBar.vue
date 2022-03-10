@@ -5,180 +5,180 @@
 </template>
 
 <script>
-import echarts from "echarts";
+import echarts from 'echarts'
 export default {
-  name: "verticalBar",
+  name: 'verticalBar',
   props: {
     barData: {
       type: Array,
       default: () => {
         return [
           {
-            name: "20210302",
+            name: '20210302',
             in: 565,
-            out: 333,
+            out: 333
           },
           {
-            name: "20210402",
+            name: '20210402',
             in: 565,
-            out: 333,
+            out: 333
           },
           {
-            name: "20210402",
+            name: '20210402',
             in: 565,
-            out: 333,
+            out: 333
           },
           {
-            name: "20210402",
+            name: '20210402',
             in: 565,
-            out: 333,
+            out: 333
           },
           {
-            name: "20210402",
+            name: '20210402',
             in: 565,
-            out: 333,
+            out: 333
           },
           {
-            name: "20210402",
+            name: '20210402',
             in: 565,
-            out: 333,
+            out: 333
           },
           {
-            name: "20210402",
+            name: '20210402',
             in: 565,
-            out: 333,
-          },
-        ];
-      },
-    },
+            out: 333
+          }
+        ]
+      }
+    }
   },
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  mounted() {
-    this.chartsInit();
+  mounted () {
+    this.chartsInit()
   },
   methods: {
-    chartsInit() {
-      const chart = this.$refs.chart;
+    chartsInit () {
+      const chart = this.$refs.chart
       if (chart) {
-        let myChart = this.$echarts.init(chart);
-        var xData = [],
-          firstData = [],
-          secondData = [];
+        let myChart = this.$echarts.init(chart)
+        var xData = []
+        var firstData = []
+        var secondData = []
 
-        var min = 0; // 最小值的定义
-        console.log(this.barData);
+        var min = 0 // 最小值的定义
+        console.log(this.barData)
         for (let i = 0; i < this.barData.length; i++) {
-          xData.push(this.barData[i].name);
-          firstData.push(this.barData[i].in);
-          secondData.push(this.barData[i].out);
+          xData.push(this.barData[i].name)
+          firstData.push(this.barData[i].in)
+          secondData.push(this.barData[i].out)
         }
         const option = {
           tooltip: {
-            trigger: "axis",
+            trigger: 'axis',
             axisPointer: {
-              type: "line",
+              type: 'line',
               lineStyle: {
-                opacity: 0,
-              },
+                opacity: 0
+              }
             },
             formatter: function (prams) {
-              console.log("param", prams);
+              console.log('param', prams)
               return (
-                "接受量：" +
+                '接受量：' +
                 prams[0].data +
-                "%" +
-                "<br>" +
-                "转出率：" +
+                '%' +
+                '<br>' +
+                '转出率：' +
                 prams[1].data +
-                "%"
-              );
-            },
+                '%'
+              )
+            }
           },
           legend: {
-            data: ["接收量", "转出量"],
-            top: "4%",
+            data: ['接收量', '转出量'],
+            top: '4%',
             show: true,
             itemWidth: 10,
             itemHeight: 10,
             textStyle: {
-              color: "#ffffff",
-            },
+              color: '#ffffff'
+            }
           },
           grid: {
-            left: "0%",
-            right: "10%",
-            bottom: "5%",
-            top: "20%",
-            height: "80%",
-            width: "90%",
+            left: '0%',
+            right: '10%',
+            bottom: '5%',
+            top: '20%',
+            height: '80%',
+            width: '90%',
             containLabel: true,
-            z: 22,
+            z: 22
           },
           xAxis: [
             {
-              type: "category",
+              type: 'category',
               gridIndex: 0,
               data: xData,
               axisTick: {
-                alignWithLabel: true,
+                alignWithLabel: true
               },
               splitNumber: 9,
               splitLine: {
                 show: true,
                 lineStyle: {
-                  color: "#1C4666",
-                },
+                  color: '#1C4666'
+                }
               },
               axisLine: {
                 lineStyle: {
-                  color: "#0c3b71",
-                },
+                  color: '#0c3b71'
+                }
               },
               axisLabel: {
                 show: true,
-                color: "rgb(170,170,170)",
+                color: 'rgb(170,170,170)',
                 fontSize: 12,
-                rotate: 20,
-              },
-            },
+                rotate: 20
+              }
+            }
           ],
           yAxis: [
             {
-              type: "value",
-              name: "单位（万次）",
+              type: 'value',
+              name: '单位（万次）',
               nameTextStyle: {
-                color: "rgb(170,170,170)",
+                color: 'rgb(170,170,170)'
               },
               gridIndex: 0,
               splitNumber: 6,
               splitLine: {
                 show: true,
                 lineStyle: {
-                  color: "#1C4666",
-                },
+                  color: '#1C4666'
+                }
               },
               axisTick: {
-                show: false,
+                show: false
               },
               min: min,
               max: 1200,
               axisLine: {
                 lineStyle: {
-                  color: "#0c3b71",
-                },
+                  color: '#0c3b71'
+                }
               },
               axisLabel: {
-                color: "rgb(170,170,170)",
-                formatter: "{value}",
-              },
-            },
+                color: 'rgb(170,170,170)',
+                formatter: '{value}'
+              }
+            }
           ],
           series: [
             {
-              name: "接收量",
-              type: "bar",
+              name: '接收量',
+              type: 'bar',
               barWidth: 8,
               xAxisIndex: 0,
               yAxisIndex: 0,
@@ -188,21 +188,21 @@ export default {
                   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                     {
                       offset: 0,
-                      color: "rgba(76,215,255,1)",
+                      color: 'rgba(76,215,255,1)'
                     },
                     {
                       offset: 1,
-                      color: "rgba(0,101,214,1)",
-                    },
-                  ]),
-                },
+                      color: 'rgba(0,101,214,1)'
+                    }
+                  ])
+                }
               },
               data: firstData,
-              zlevel: 11,
+              zlevel: 11
             },
             {
-              name: "转出量",
-              type: "bar",
+              name: '转出量',
+              type: 'bar',
               barWidth: 8,
               xAxisIndex: 0,
               yAxisIndex: 0,
@@ -213,13 +213,13 @@ export default {
                   color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
                     {
                       offset: 0,
-                      color: "#fff82e",
+                      color: '#fff82e'
                     },
                     {
                       offset: 1,
-                      color: "#deac00",
-                    },
-                  ]),
+                      color: '#deac00'
+                    }
+                  ])
                   // color: {
                   //   //好像不能够同时使用this.$echarts.graphic ,后设置的颜色会把前面的覆盖掉
                   //   type: "linear",
@@ -238,27 +238,19 @@ export default {
                   //     },
                   //   ],
                   // },
-                },
+                }
               },
               data: secondData,
-              zlevel: 11,
-            },
-          ],
-        };
+              zlevel: 11
+            }
+          ]
+        }
 
-        myChart.setOption(option);
-        window.addEventListener("resize", function () {
-          myChart.resize();
-        });
+        myChart.setOption(option)
       }
-      this.$on("hook:destroyed", () => {
-        window.removeEventListener("resize", function () {
-          myChart.resize();
-        });
-      });
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>
