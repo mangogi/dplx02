@@ -1,9 +1,7 @@
 <template>
-  <div
-    id="regionCharts"
-    ref="map"
-    :style="{ width: '800px', height: '540px' }"
-  ></div>
+  <div id="regionCharts"
+       ref="map"
+       :style="{ width: '800px', height: '540px' }"></div>
 </template>
 
 <script>
@@ -12,17 +10,17 @@ import mapJson from '../../../../static/json/xinjiang.json'
 // import 'echarts/map/js/china.js';
 export default {
   name: 'outChart',
-  data () {
+  data() {
     return {
       chart: {}
     }
   },
-  mounted () {
+  mounted() {
     this.drawMap()
   },
-  created () {},
+  created() { },
   methods: {
-    drawMap () {
+    drawMap() {
       // 注册地图
       this.$echarts.registerMap('xinijang', mapJson) // 如果是js引入就不需要这一行了
       // 绘制地图
@@ -200,7 +198,6 @@ export default {
               }
             ]
           }
-
         ]
       }
       this.chart.setOption(option)
@@ -209,5 +206,4 @@ export default {
 }
 </script>
 
-<style scoped lang='less'>
-</style>
+<style scoped lang="less"></style>

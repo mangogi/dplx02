@@ -2,12 +2,15 @@
   <div id="topbox">
     <div class="boxs">
       <!-- 左侧图标 -->
-      <img :src="imgurl" class="imgs" />
+      <img :src="imgurl"
+           class="imgs" />
       <!-- 中间数字部分 -->
       <div class="numberBox">
         <p class="title">{{ title }}</p>
         <div class="counts">
-          <div class="numbers" v-for="(item, index) in num" :key="index">
+          <div class="numbers"
+               v-for="(item, index) in num"
+               :key="index">
             <span class="font">{{ item }}</span>
           </div>
           <span class="units">家</span>
@@ -59,10 +62,10 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {}
   },
-  mounted () {},
+  mounted() { },
   methods: {}
 }
 </script>
@@ -97,6 +100,19 @@ export default {
   border: solid 1px #274d8e;
   margin-right: 3px;
   text-align: center;
+  animation-name: numbers;
+  animation-duration: 4s;
+}
+@keyframes numbers {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(150deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
 }
 .font {
   font-family: Impact;
