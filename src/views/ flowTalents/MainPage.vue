@@ -152,7 +152,6 @@
             <div class="titlebar pos">
               <div class="titletext">存档名族分析</div>
             </div>
-            >
             <!-- 存档名族分析饼图 -->
             <pie
               class="chartsSex chartsWidth"
