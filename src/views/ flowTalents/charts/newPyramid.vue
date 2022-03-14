@@ -5,25 +5,25 @@
 <script>
 export default {
   name: 'newPyramid',
-  data () {
+  data() {
     return {
-      chart: {}
+      chart: {},
     }
   },
-  mounted () {
+  mounted() {
     this.initCharts()
   },
   methods: {
-    initCharts () {
+    initCharts() {
       let datas = [
         { value: 20, name: '硕士及以上' },
         { value: 40, name: '本科' },
         { value: 60, name: '高中' },
         { value: 80, name: '中专及以下' },
-        { value: 100, name: '专科' }
+        { value: 100, name: '专科' },
       ]
       let all = 0
-      datas.forEach((item) => {
+      datas.forEach(item => {
         return (all = all + item.value)
       })
       const pyramid = this.$refs.pyramid
@@ -33,7 +33,7 @@ export default {
         color: colorList,
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/>{b} : {c}'
+          formatter: '{a} <br/>{b} : {c}',
         },
 
         series: [
@@ -49,7 +49,7 @@ export default {
                 hight: 30,
                 fontSize: 14,
                 color: '#fff',
-                formatter: function (params) {
+                formatter: function(params) {
                   return (
                     '{name|' +
                     params.name +
@@ -67,29 +67,29 @@ export default {
                   name: {
                     color: '#5cbcff',
                     fontSize: 14,
-                    padding: [0, 0, 0, 0]
+                    padding: [0, 0, 0, 0],
                   },
                   val: {
                     fontSize: 14,
-                    padding: [1, 0, 0, 0]
-                  }
-                }
-              }
+                    padding: [1, 0, 0, 0],
+                  },
+                },
+              },
             },
             labelLine: {
               normal: {
                 show: true,
-                length: 70
-              }
+                length: 70,
+              },
             },
             itemStyle: {
               normal: {
                 opacity: 1,
-                borderColor: 'rgba(9,20,36,0)'
+                borderColor: 'rgba(9,20,36,0)',
               },
-              rotate: -32
+              rotate: -32,
             },
-            data: datas
+            data: datas,
           },
           {
             name: '',
@@ -100,10 +100,10 @@ export default {
             sort: 'ascending',
             gap: 0,
             label: {
-              show: false
+              show: false,
             },
             labelLine: {
-              show: false
+              show: false,
             },
             itemStyle: {
               normal: {
@@ -113,25 +113,25 @@ export default {
                 shadowBlur: 5,
                 shadowOffsetX: 5,
                 shadowOffsetY: 0,
-                shadowColor: 'rgba(0, 0, 0, 1)'
-              }
+                shadowColor: 'rgba(0, 0, 0, 1)',
+              },
             },
 
-            data: datas
-          }
-        ]
+            data: datas,
+          },
+        ],
       }
 
       this.chart.setOption(option)
-    }
+    },
   },
   /**
    * 销毁实例
    */
-  beforeDestroy () {
+  beforeDestroy() {
     this.$echarts.dispose(this.chart)
     this.chart = null
-  }
+  },
 }
 </script>
 

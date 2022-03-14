@@ -1,21 +1,22 @@
 <template>
-<!-- 切图实现棱锥体 -->
-    <div class="pyramid" ref="pyramid">
-</div>
+  <!-- 切图实现棱锥体 -->
+  <div class="pyramid"
+       ref="pyramid">
+  </div>
 </template>
 <script>
 export default {
   name: 'pyramid',
-  data () {
+  data() {
     return {
-      loadingFunnel: {arrData: [20, 40, 60, 80, 100], title: {}}
+      loadingFunnel: { arrData: [20, 40, 60, 80, 100], title: {} }
     }
   },
-  mounted () {
+  mounted() {
     this.test()
   },
   methods: {
-    setTitle (text, top, left, color, fontStyle, fontFamily, fontSize) {
+    setTitle(text, top, left, color, fontStyle, fontFamily, fontSize) {
       this.loadingFunnel.title = {
         text: text,
         top: top,
@@ -29,7 +30,7 @@ export default {
       }
       return this.loadingFunnel.title
     },
-    test () {
+    test() {
       let chart1 = this.$echarts.init(this.$refs.pyramid)
       console.log(chart1)
       let option1 = {

@@ -1,5 +1,6 @@
 <template>
-  <div class="ScreenAdapter" :style="style">
+  <div class="ScreenAdapter"
+       :style="style">
     <slot />
   </div>
 </template>
@@ -17,7 +18,7 @@ export default {
       default: '1080'
     }
   },
-  data () {
+  data() {
     return {
       style: {
         width: this.width + 'px',
@@ -26,7 +27,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.setScale()
     window.onresize = this.Debounce(this.setScale, 1000)
   },
@@ -47,13 +48,13 @@ export default {
       }
     },
     // 获取放大缩小比例
-    getScale () {
+    getScale() {
       const w = window.innerWidth / this.width
       const h = window.innerHeight / this.height
       return w + ',' + h
     },
     // 设置比例
-    setScale () {
+    setScale() {
       this.style.transform = 'scale(' + this.getScale() + ') translate(-50%, -50%)'
     }
   }
