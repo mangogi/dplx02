@@ -12,12 +12,49 @@ import mapJson from '../../../../static/json/xinjiang.json'
 // import 'echarts/map/js/china.js';
 export default {
   name: 'mapChart',
+  props: {
+    mapData: {
+      type: Array,
+      default: () => {
+        return [
+          {
+            count: 2,
+            sourceLat: '42.50064453125', // 北纬
+            sourceLng: '93.28025390625', // 东经
+            targetName: '乌鲁木齐',
+            targetId: '001',
+          },
+          {
+            count: 2,
+            sourceLat: '39.30064453125',
+            sourceLng: '75.59025390625',
+            targetName: '乌鲁木齐',
+            targetId: '001',
+          },
+          {
+            count: 2,
+            sourceLat: '44.57064453125',
+            sourceLng: '82.08025390625',
+            targetName: '乌鲁木齐',
+            targetId: '001',
+          },
+          {
+            count: 2,
+            sourceLat: '37.12064453125',
+            sourceLng: '79.94025390625',
+            targetName: '乌鲁木齐',
+            targetId: '001',
+          },
+        ]
+      },
+    },
+  },
   data() {
     return {
       chart: {},
-      mapDate: [],
     }
   },
+  watch() {},
   mounted() {
     this.drawMap()
   },
@@ -28,37 +65,6 @@ export default {
       this.$echarts.registerMap('xinijang', mapJson) // 如果是js引入就不需要这一行了
       // 绘制地图
       this.chart = this.$echarts.init(document.getElementById('regionCharts'))
-      // 数据
-      var mapDate = [
-        {
-          count: 2,
-          sourceLat: '42.50064453125', // 北纬
-          sourceLng: '93.28025390625', // 东经
-          targetName: '乌鲁木齐',
-          targetId: '001',
-        },
-        {
-          count: 2,
-          sourceLat: '39.30064453125',
-          sourceLng: '75.59025390625',
-          targetName: '乌鲁木齐',
-          targetId: '001',
-        },
-        {
-          count: 2,
-          sourceLat: '44.57064453125',
-          sourceLng: '82.08025390625',
-          targetName: '乌鲁木齐',
-          targetId: '001',
-        },
-        {
-          count: 2,
-          sourceLat: '37.12064453125',
-          sourceLng: '79.94025390625',
-          targetName: '乌鲁木齐',
-          targetId: '001',
-        },
-      ]
       // 该方法处理数据 决定箭头是往内还是外
       var convertData = function(data) {
         var res = []
@@ -129,7 +135,7 @@ export default {
                 curveness: 0.1, // 尾迹线条曲直度
               },
             },
-            data: convertData(mapDate),
+            data: convertData(this.mapData),
           },
           {
             type: 'effectScatter',
@@ -166,7 +172,7 @@ export default {
                 color: '#1be7d4',
               },
             },
-            data: mapDate.map(function(dataItem) {
+            data: this.mapData.map(function(dataItem) {
               return {
                 name: '',
                 value: [dataItem.sourceLng, dataItem.sourceLat, dataItem.count],
