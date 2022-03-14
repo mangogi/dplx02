@@ -9,29 +9,37 @@
       </div>
       <!-- 页面中部四个方块部分 -->
       <div class="center">
-        <top-box :num="dajslArr"
-                 title="档案总存档"
-                 :down="down"
-                 :up="up"
-                 :imgurl="allImg">
+        <top-box
+          :num="dajslArr"
+          title="档案总存档"
+          :down="down"
+          :up="up"
+          :imgurl="allImg"
+        >
         </top-box>
-        <top-box :num="dajslArr"
-                 title="档案接受量"
-                 :down="down"
-                 :up="up"
-                 :imgurl="receiveImg">
+        <top-box
+          :num="dajslArr"
+          title="档案接受量"
+          :down="down"
+          :up="up"
+          :imgurl="receiveImg"
+        >
         </top-box>
-        <top-box :num="dajslArr"
-                 title="档案借阅量"
-                 :down="down"
-                 :up="up"
-                 :imgurl="rendImg">
+        <top-box
+          :num="dajslArr"
+          title="档案借阅量"
+          :down="down"
+          :up="up"
+          :imgurl="rendImg"
+        >
         </top-box>
-        <top-box :num="dajslArr"
-                 title="档案转出量"
-                 :down="down"
-                 :up="up"
-                 :imgurl="outImg">
+        <top-box
+          :num="dajslArr"
+          title="档案转出量"
+          :down="down"
+          :up="up"
+          :imgurl="outImg"
+        >
         </top-box>
       </div>
       <!-- 四个方块以下部分 -->
@@ -44,20 +52,21 @@
               <div class="titletext">性别分布</div>
             </div>
             <!-- 性别分布饼图 -->
-            <pie class="chartsSex chartsWidth"
-                 :pieData="sexData"
-                 :iconUrl="'xingbietongji'"
-                 :outColor="sexColorOne"
-                 :innerColor="sexColorTwo"
-                 v-if="flag"></pie>
+            <pie
+              class="chartsSex chartsWidth"
+              :pieData="sexData"
+              :iconUrl="'xingbietongji'"
+              :outColor="sexColorOne"
+              :innerColor="sexColorTwo"
+              v-if="flag"
+            ></pie>
           </div>
           <div class="leftCenter">
             <div class="titlebar pos">
               <div class="titletext">年龄分布</div>
             </div>
             <!-- 年龄分布条形图 -->
-            <bar class="chartsAge chartsWidth"
-                 :barData="ageData"></bar>
+            <bar class="chartsAge chartsWidth" :barData="ageData"></bar>
           </div>
           <div class="leftBottom">
             <div class="titlebar pos">
@@ -74,14 +83,18 @@
             <br />
             <p class="map_title">劳动转移情况</p>
             <div class="map_btnbox">
-              <button class="map_btn"
-                      :class="{ map_btn_selected: isSelected }"
-                      @click="changeMap(0)">
+              <button
+                class="map_btn"
+                :class="{ map_btn_selected: isSelected }"
+                @click="changeMap(0)"
+              >
                 转入
               </button>
-              <button class="map_btn"
-                      :class="{ map_btn_selected: !isSelected }"
-                      @click="changeMap(1)">
+              <button
+                class="map_btn"
+                :class="{ map_btn_selected: !isSelected }"
+                @click="changeMap(1)"
+              >
                 转出
               </button>
             </div>
@@ -95,26 +108,27 @@
                 <span>转出</span>
               </div>
             </div>
-            <map-chart class="map_chart"
-                       v-if="isSelected"></map-chart>
-            <out-chart class="map_chart"
-                       v-if="!isSelected"></out-chart>
+            <map-chart class="map_chart" v-if="isSelected"></map-chart>
+            <out-chart class="map_chart" v-if="!isSelected"></out-chart>
           </div>
           <div class="mapBottom">
             <p>转移排行</p>
             <div class="panel_box">
-              <panel :provinceData="provinceData[0]"
-                     :imgurl="'location-full'"></panel>
-              <panel :provinceData="provinceData[1]"
-                     :imgurl="'location-full-2'"></panel>
-              <panel :provinceData="provinceData[2]"
-                     :imgurl="'location-full-3'"></panel>
-              <panel :provinceData="provinceData[3]"
-                     :imgurl="''"></panel>
-              <panel :provinceData="provinceData[4]"
-                     :imgurl="''"></panel>
-              <panel :provinceData="provinceData[5]"
-                     :imgurl="''"></panel>
+              <panel
+                :provinceData="provinceData[0]"
+                :imgurl="'location-full'"
+              ></panel>
+              <panel
+                :provinceData="provinceData[1]"
+                :imgurl="'location-full-2'"
+              ></panel>
+              <panel
+                :provinceData="provinceData[2]"
+                :imgurl="'location-full-3'"
+              ></panel>
+              <panel :provinceData="provinceData[3]" :imgurl="''"></panel>
+              <panel :provinceData="provinceData[4]" :imgurl="''"></panel>
+              <panel :provinceData="provinceData[5]" :imgurl="''"></panel>
             </div>
           </div>
         </div>
@@ -125,33 +139,40 @@
               <div class="titletext">存档性质分析</div>
             </div>
             <!-- 存档性质分析饼图 -->
-            <pie class="chartsSex chartsWidth"
-                 :pieData="natureData"
-                 :iconUrl="'存档性质分析'"
-                 :outColor="natureColorOne"
-                 :innerColor="natureColorTwo"
-                 v-if="flag"></pie>
+            <pie
+              class="chartsSex chartsWidth"
+              :pieData="natureData"
+              :iconUrl="'存档性质分析'"
+              :outColor="natureColorOne"
+              :innerColor="natureColorTwo"
+              v-if="flag"
+            ></pie>
           </div>
           <div class="rightCenter">
             <div class="titlebar pos">
               <div class="titletext">存档名族分析</div>
             </div>
+            >
             <!-- 存档名族分析饼图 -->
-            <pie class="chartsSex chartsWidth"
-                 :pieData="nationData"
-                 :iconUrl="'存档民族分析'"
-                 :outColor="nationColorOne"
-                 :innerColor="nationColorTwo"
-                 v-if="flag"></pie>
+            <pie
+              class="chartsSex chartsWidth"
+              :pieData="nationData"
+              :iconUrl="'存档民族分析'"
+              :outColor="nationColorOne"
+              :innerColor="nationColorTwo"
+              v-if="flag"
+            ></pie>
           </div>
           <div class="rightBottom">
             <div class="titlebar pos">
               <div class="titletext">近六个月档案接收和转出情况</div>
             </div>
             <!-- 近6个月档案接收和转出情况 -->
-            <vertical-bar v-if="showBar"
-                          class="chartsSex chartsWidth"
-                          :barData="fileData"></vertical-bar>
+            <vertical-bar
+              v-if="showBar"
+              class="chartsSex chartsWidth"
+              :barData="fileData"
+            ></vertical-bar>
           </div>
         </div>
       </div>
@@ -184,7 +205,7 @@ export default {
     ScreenAdapter,
     pyramid,
     mapChart,
-    outChart
+    outChart,
   },
   data() {
     return {
@@ -198,15 +219,15 @@ export default {
       outImg: '', // 档案转出量图标路径
       sexData: [
         { name: '男性', val: '245678', per: '50.00%' },
-        { name: '女性', val: '240078', per: '50.00%' }
+        { name: '女性', val: '240078', per: '50.00%' },
       ], // 性别饼图数据
       nationData: [
         { name: '汉族', val: '245678', per: '50.00%' },
-        { name: '少数名族', val: '240078', per: '50.00%' }
+        { name: '少数名族', val: '240078', per: '50.00%' },
       ], // 民族饼图数据
       natureData: [
         { name: '个人存档', val: '245678', per: '50.00%' },
-        { name: '企业存档', val: '180078', per: '50.00%' }
+        { name: '企业存档', val: '180078', per: '50.00%' },
       ], // 性质饼图数据
       bgUrl: '', //
       sexUrl: '',
@@ -225,7 +246,7 @@ export default {
         { name: '40～49', value: '1234', per: '12%' },
         { name: '30～39', value: '1234', per: '12%' },
         { name: '20～29', value: '1234', per: '12%' },
-        { name: '20及以下', value: '1234', per: '12%' }
+        { name: '20及以下', value: '1234', per: '12%' },
       ],
       fileData: [],
       showBar: false,
@@ -235,13 +256,13 @@ export default {
         { name: '湖南省', value: 0.63, num: '8.8万人' },
         { name: '北京市', value: 0.63, num: '8.8万人' },
         { name: '上海市', value: 0.63, num: '8.8万人' },
-        { name: '江苏省', value: 0.63, num: '8.8万人' }
+        { name: '江苏省', value: 0.63, num: '8.8万人' },
       ],
       redlogo: '',
       yellowlogo: '',
       greenlogo: '',
       showPanel: false,
-      isSelected: false // 按钮是佛选中
+      isSelected: false, // 按钮是佛选中
     }
   },
   mounted() {
@@ -266,7 +287,7 @@ export default {
      * 用于处理数据不满六位，头部添零
      */
     arrSet() {
-      const counts = this.dajsl.toString().split('')// 将数字转位数组
+      const counts = this.dajsl.toString().split('') // 将数字转位数组
       this.dajslArr = counts
       if (this.dajslArr.length < 6) {
         if (this.dajslArr.length === 5) {
@@ -305,60 +326,60 @@ export default {
       this.natureColorOne = ['rgba(0, 217, 153,1)', 'rgba(255, 228, 0,1)']
       this.natureColorTwo = [
         'rgba(0, 217, 153, 0.16)',
-        'rgba(255, 228, 0,0.16)'
+        'rgba(255, 228, 0,0.16)',
       ]
       this.nationColorOne = ['rgba(18, 91, 255, 1)', 'rgba(26, 251, 255,1)']
       this.nationColorTwo = [
         'rgba(18, 91, 255,0.16)',
-        'rgba(26, 251, 255,0.16)'
+        'rgba(26, 251, 255,0.16)',
       ]
 
       this.flag = true
     },
     setBarData() {
       // eslint-disable-next-line no-unused-expressions
-      (this.fileData = [
+      this.fileData = [
         {
           name: '20210302',
           in: 565,
-          out: 333
+          out: 333,
         },
         {
           name: '20210402',
           in: 565,
-          out: 333
+          out: 333,
         },
         {
           name: '20210402',
           in: 565,
-          out: 333
+          out: 333,
         },
         {
           name: '20210402',
           in: 565,
-          out: 333
+          out: 333,
         },
         {
           name: '20210402',
           in: 565,
-          out: 333
+          out: 333,
         },
         {
           name: '20210402',
           in: 565,
-          out: 333
+          out: 333,
         },
         {
           name: '20210402',
           in: 565,
-          out: 333
-        }
-      ])
+          out: 333,
+        },
+      ]
       this.$nextTick(() => {
         this.showBar = true
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -374,7 +395,7 @@ export default {
 .top {
   width: 1910px;
   height: 83px;
-  background-image: url("../../assets/imgs/01.png");
+  background-image: url('../../assets/imgs/01.png');
   background-repeat: no-repeat;
   margin-left: 10px;
   display: flex;
