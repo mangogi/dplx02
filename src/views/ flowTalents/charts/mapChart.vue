@@ -25,21 +25,21 @@ export default {
             targetId: '001',
           },
           {
-            count: 2,
+            count: 6,
             sourceLat: '39.30064453125',
             sourceLng: '75.59025390625',
             targetName: '乌鲁木齐',
             targetId: '001',
           },
           {
-            count: 2,
+            count: 8,
             sourceLat: '44.57064453125',
             sourceLng: '82.08025390625',
             targetName: '乌鲁木齐',
             targetId: '001',
           },
           {
-            count: 2,
+            count: 10,
             sourceLat: '37.12064453125',
             sourceLng: '79.94025390625',
             targetName: '乌鲁木齐',
@@ -66,7 +66,7 @@ export default {
       // 绘制地图
       this.chart = this.$echarts.init(document.getElementById('regionCharts'))
       // 该方法处理数据 决定箭头是往内还是外
-      var convertData = function(data) {
+      let convertData = data => {
         var res = []
         for (var i = 0; i < data.length; i++) {
           var dataItem = data[i]
