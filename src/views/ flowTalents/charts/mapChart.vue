@@ -21,6 +21,7 @@ export default {
             count: 2,
             sourceLat: '42.50064453125', // 北纬
             sourceLng: '93.28025390625', // 东经
+            name: '和田地区',
             targetName: '乌鲁木齐',
             targetId: '001',
           },
@@ -29,12 +30,14 @@ export default {
             sourceLat: '39.30064453125',
             sourceLng: '75.59025390625',
             targetName: '乌鲁木齐',
+            name: '和田地区',
             targetId: '001',
           },
           {
             count: 8,
             sourceLat: '44.57064453125',
             sourceLng: '82.08025390625',
+            name: '和田地区',
             targetName: '乌鲁木齐',
             targetId: '001',
           },
@@ -42,37 +45,63 @@ export default {
             count: 10,
             sourceLat: '37.12064453125',
             sourceLng: '79.94025390625',
+            name: '和田地区',
             targetName: '乌鲁木齐',
             targetId: '001',
           },
         ]
       },
     },
+    destination: {
+      type: Array,
+      default: () => {
+        return [87.364965353, 43.45224936]
+      },
+    },
+    keys: {
+      type: String,
+      default: 'in',
+    },
   },
   data() {
     return {
       chart: {},
+      option: {},
+      convertData: null,
+      lineColor: '#1be7d4',
     }
   },
-  watch() {},
+  watch: {
+    keys: {
+      handler(val, oldVal) {
+        if (val) {
+          this.drawMap(this.lineColor)
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
   mounted() {
     this.drawMap()
   },
   created() {},
   methods: {
     drawMap() {
+      console.log(this.destination)
       // 注册地图
       this.$echarts.registerMap('xinijang', mapJson) // 如果是js引入就不需要这一行了
       // 绘制地图
       this.chart = this.$echarts.init(document.getElementById('regionCharts'))
       // 该方法处理数据 决定箭头是往内还是外
-      let convertData = data => {
-        var res = []
-        for (var i = 0; i < data.length; i++) {
-          var dataItem = data[i]
-          var fromCoord = [dataItem.sourceLng, dataItem.sourceLat] // 起点
-          var toCoord = [87.364965353, 43.45224936] // 终点
-          if (fromCoord && toCoord) {
+      this.convertData = (data, des) => {
+        let res = []
+        for (let i = 0; i < data.length; i++) {
+          let dataItem = data[i]
+          let fromCoord = [dataItem.sourceLng, dataItem.sourceLat] // 起点
+          let toCoord = des // 终点
+          console.log(des)
+          if (fromCoord && toCoord && this.keys == 'in') {
             res.push([
               {
                 coord: fromCoord,
@@ -82,16 +111,33 @@ export default {
                 coord: toCoord,
               },
             ])
+            this.lineColor = '#1be7d4'
+          }
+          if (fromCoord && toCoord && this.keys == 'out') {
+            if (fromCoord && toCoord) {
+              res.push([
+                {
+                  coord: toCoord, // 目的地
+                  value: dataItem.count,
+                },
+                {
+                  coord: fromCoord, // 出发地
+                },
+              ])
+              this.lineColor = '#e7db1b'
+            }
           }
         }
         return res
       }
-
-      let option = {
+      this.getOpt(this.lineColor)
+    },
+    getOpt(color) {
+      this.option = {
         tooltip: {
           trigger: 'item',
           formatter: function(params) {
-            return params.name + ':' + '11111'
+            console.log('tool', params)
           },
         },
         geo: {
@@ -120,7 +166,7 @@ export default {
           {
             type: 'lines',
             zlevel: 2,
-            color: '#1be7d4',
+            color: color, //线的颜色
             effect: {
               show: true,
               period: 4, // 箭头指向速度，值越小速度越快
@@ -135,7 +181,7 @@ export default {
                 curveness: 0.1, // 尾迹线条曲直度
               },
             },
-            data: convertData(this.mapData),
+            data: this.convertData(this.mapData, this.destination),
           },
           {
             type: 'effectScatter',
@@ -154,7 +200,7 @@ export default {
                 offset: [5, 0], // 偏移设置
                 formatter: function(params) {
                   // 圆环显示文字
-                  return params.data.name
+                  return params.value[2]
                 },
                 fontSize: 16,
               },
@@ -169,7 +215,7 @@ export default {
             itemStyle: {
               normal: {
                 show: false,
-                color: '#1be7d4',
+                color: color,
               },
             },
             data: this.mapData.map(function(dataItem) {
@@ -196,7 +242,7 @@ export default {
                 offset: [5, 0], // 偏移设置
                 formatter: function(params) {
                   // 圆环显示文字
-                  return params.data.name
+                  return params.value[1]
                 },
                 fontSize: 16,
               },
@@ -211,7 +257,7 @@ export default {
             itemStyle: {
               normal: {
                 show: false,
-                color: '#1be7d4',
+                color: color,
               },
             },
             data: [
@@ -223,7 +269,10 @@ export default {
           },
         ],
       }
-      this.chart.setOption(option)
+      this.chart.setOption(this.option)
+    },
+    refreshChart() {
+      this.chart.setOption(this.option)
     },
   },
 }

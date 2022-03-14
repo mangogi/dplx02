@@ -108,8 +108,17 @@
                 <span>转出</span>
               </div>
             </div>
-            <map-chart class="map_chart" v-if="isSelected"></map-chart>
-            <out-chart class="map_chart" v-if="!isSelected"></out-chart>
+            <map-chart
+              class="map_chart"
+              :keys="'in'"
+              v-if="isSelected"
+            ></map-chart>
+            <map-chart
+              class="map_chart"
+              :keys="'out'"
+              v-if="!isSelected"
+            ></map-chart>
+            <!-- <out-chart class="map_chart" v-if="!isSelected"></out-chart> -->
           </div>
           <div class="mapBottom">
             <p>转移排行</p>
@@ -262,6 +271,7 @@ export default {
       greenlogo: '',
       showPanel: false,
       isSelected: false, // 按钮是佛选中
+      chartKey: '', //地图 转入还是转出
     }
   },
   mounted() {
@@ -278,8 +288,10 @@ export default {
     changeMap(key) {
       if (key === 0) {
         this.isSelected = true
+        this.chartKey = 'in'
       } else {
         this.isSelected = false
+        this.chartKey = 'out'
       }
     },
     /**
@@ -288,6 +300,7 @@ export default {
     arrSet() {
       const counts = this.dajsl.toString().split('') // 将数字转位数组
       this.dajslArr = counts
+
       if (this.dajslArr.length < 6) {
         if (this.dajslArr.length === 5) {
           this.dajslArr.unshift('0')
