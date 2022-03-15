@@ -106,6 +106,12 @@ export default {
       this.$echarts.registerMap('xinijang', mapJson) // 如果是js引入就不需要这一行了
       // 绘制地图
       this.chart = this.$echarts.init(document.getElementById('regionCharts'))
+      this.getOpt(this.lineColor)
+    },
+    /**
+     * 设置option
+     */
+    getOpt(color) {
       // 该方法处理数据 决定箭头是往内还是外
       this.convertData = (data, des) => {
         let res = []
@@ -140,17 +146,12 @@ export default {
         }
         return res
       }
-      this.getOpt(this.lineColor)
-    },
-    /**
-     * 设置option
-     */
-    getOpt(color) {
       this.option = {
         tooltip: {
           trigger: 'item',
           formatter: function(params) {
             // return params
+            console.log('ditu ', params)
           },
         },
         geo: {
@@ -159,15 +160,41 @@ export default {
           top: '9%',
           zoom: 1.23,
           roam: false,
+          label: {
+            normal: {
+              show: !0,
+              fontSize: '14',
+              color: 'rgba(255,255,255,0.7)',
+            },
+          },
           itemStyle: {
             normal: {
-              areaColor: '#013c62',
+              // areaColor: '#013c62',
+              areaColor: {
+                type: 'radial',
+                x: 0.5,
+                y: 0.5,
+                r: 0.8,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'rgba(4, 32, 103, 1)', // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(4, 32, 103, 0.3)', // 100% 处的颜色
+                  },
+                ],
+                globalCoord: false, // 缺省为 false
+              },
               shadowColor: '#182f68',
-              shadowOffsetX: 0,
+              shadowOffsetX: -5,
               shadowOffsetY: 20, // 阴影 实现效果
               label: {
                 show: true,
               },
+              borderColor: '#00acfc',
+              borderWidth: 2,
             },
             emphasis: {
               areaColor: '#2ab8ff',
@@ -227,7 +254,7 @@ export default {
             },
             symbol: 'circle',
             symbolSize: function(val) {
-              return 5 + val[2] * 2 // 圆环大小
+              return 16 // 圆环大小
             },
             itemStyle: {
               normal: {
