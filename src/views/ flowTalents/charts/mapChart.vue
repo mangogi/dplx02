@@ -2,7 +2,7 @@
   <div
     id="regionCharts"
     ref="map"
-    :style="{ width: '800px', height: '540px' }"
+    :style="{ width: '800px', height: '580px' }"
   ></div>
 </template>
 
@@ -151,8 +151,9 @@ export default {
         },
         geo: {
           map: 'xinijang',
-          aspectScale: 0.75, //长宽比
-          zoom: 1.15,
+          aspectScale: 1.1, //长宽比
+          top: '9%',
+          zoom: 1.23,
           roam: false,
           itemStyle: {
             normal: {

@@ -108,5 +108,10 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  }
+  },
+  "config": {
+    "cz-customizable": {
+      "config": ".cz-config.js"
+    }
+     }
 }
