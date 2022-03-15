@@ -12,37 +12,37 @@ export default {
       type: Array,
       default: () => {
         return []
-      }
+      },
     },
     bgUrl: {
       type: String,
-      default: ''
+      default: '',
     },
     iconUrl: {
       type: String,
-      default: ''
+      default: '',
     },
     outColor: {
       type: Array,
       default: () => {
         return []
-      }
+      },
     },
     innerColor: {
       type: Array,
       default: () => {
         return []
-      }
-    }
+      },
+    },
   },
-  data () {
+  data() {
     return {}
   },
-  mounted () {
+  mounted() {
     this.createCharts()
   },
   methods: {
-    createCharts () {
+    createCharts() {
       const chart = this.$refs.chart
       if (chart) {
         const myChart = this.$echarts.init(chart)
@@ -52,14 +52,14 @@ export default {
             right: '5%',
             bottom: '5%',
             top: '15%',
-            containLabel: true
+            containLabel: true,
           },
           tooltip: {
             trigger: 'axis',
             axisPointer: {
-              type: 'none'
+              type: 'none',
             },
-            formatter: function (params) {
+            formatter: function(params) {
               return (
                 params[0].name +
                 '<br/>' +
@@ -71,11 +71,11 @@ export default {
                 ).toLocaleString() +
                 ' 人<br/>'
               )
-            }
+            },
           },
           xAxis: {
             show: false,
-            type: 'value'
+            type: 'value',
           },
           yAxis: [
             {
@@ -84,17 +84,17 @@ export default {
               axisLabel: {
                 show: true,
                 textStyle: {
-                  color: '#58b5f5'
-                }
+                  color: '#58b5f5',
+                },
               },
               splitLine: {
-                show: false
+                show: false,
               },
               axisTick: {
-                show: false
+                show: false,
               },
               axisLine: {
-                show: false
+                show: false,
               },
               data: [
                 '60岁以上',
@@ -102,8 +102,8 @@ export default {
                 '40～49',
                 '30～39',
                 '20～29',
-                '20及以下'
-              ]
+                '20及以下',
+              ],
             },
             {
               type: 'category',
@@ -114,9 +114,9 @@ export default {
               axisLabel: {
                 textStyle: {
                   color: '#ffffff',
-                  fontSize: '12'
+                  fontSize: '12',
                 },
-                formatter: function (value) {
+                formatter: function(value) {
                   if (value >= 10000) {
                     return (
                       (value / 10000).toLocaleString() + '人' + '   ' + '12%'
@@ -124,7 +124,7 @@ export default {
                   } else {
                     return value.toLocaleString()
                   }
-                }
+                },
               },
               data: [
                 50000000,
@@ -133,9 +133,9 @@ export default {
                 5000000,
                 1000000,
                 5000000,
-                5000000
-              ]
-            }
+                5000000,
+              ],
+            },
           ],
           series: [
             {
@@ -153,11 +153,11 @@ export default {
                   //     offset: 1,
                   //     color: 'rgb(46,200,207,1)'
                   // }]),
-                  color: '#58b5f5'
-                }
+                  color: '#58b5f5',
+                },
               },
               barWidth: 12,
-              data: [50000000, 22000000, 10000000, 5000000, 5000000, 5000000]
+              data: [50000000, 22000000, 10000000, 5000000, 5000000, 5000000],
             },
             {
               name: '背景',
@@ -170,21 +170,25 @@ export default {
                 50000000,
                 50000000,
                 50000000,
-                50000000
+                50000000,
               ],
               itemStyle: {
                 normal: {
                   color: 'rgba(24,31,68,1)',
-                  borderRadius: [0, 30, 30, 0]
-                }
-              }
-            }
-          ]
+                  borderRadius: [0, 30, 30, 0],
+                },
+              },
+            },
+          ],
         }
         myChart.setOption(option)
       }
-    }
-  }
+    },
+  },
+  beforeDestory() {
+    this.$echarts.dispose(this.myChart)
+    this.myChart = null
+  },
 }
 </script>
 

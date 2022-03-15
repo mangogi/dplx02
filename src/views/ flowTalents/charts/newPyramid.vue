@@ -70,6 +70,7 @@ export default {
                     padding: [0, 0, 0, 0],
                   },
                   val: {
+                    color: '#ffffff',
                     fontSize: 14,
                     padding: [1, 0, 0, 0],
                   },
@@ -101,9 +102,14 @@ export default {
             gap: 0,
             label: {
               show: false,
+              normal: {
+                show: false,
+              },
             },
             labelLine: {
-              show: false,
+              normal: {
+                show: false,
+              },
             },
             itemStyle: {
               normal: {

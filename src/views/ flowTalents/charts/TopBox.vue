@@ -2,15 +2,15 @@
   <div id="topbox">
     <div class="boxs">
       <!-- 左侧图标 -->
-      <img :src="imgurl"
-           class="imgs" />
+      <img
+        :src="require('../../../assets/imgs/' + imgurl + '.png')"
+        class="imgs"
+      />
       <!-- 中间数字部分 -->
       <div class="numberBox">
         <p class="title">{{ title }}</p>
         <div class="counts">
-          <div class="numbers"
-               v-for="(item, index) in num"
-               :key="index">
+          <div class="numbers" v-for="(item, index) in num" :key="index">
             <span class="font">{{ item }}</span>
           </div>
           <span class="units">家</span>
@@ -39,34 +39,34 @@ export default {
       type: Array,
       default: () => {
         return ['0']
-      }
+      },
     },
     imgurl: {
       type: String,
-      default: ''
+      default: '',
     },
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     up: {
       type: String,
-      default: ''
+      default: '',
     },
     down: {
       type: String,
-      default: ''
+      default: '',
     },
     keys: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {}
   },
-  mounted() { },
-  methods: {}
+  mounted() {},
+  methods: {},
 }
 </script>
 
@@ -74,7 +74,7 @@ export default {
 .boxs {
   width: 447px;
   height: 111px;
-  background-image: url("../../../assets/imgs/box01.png");
+  background-image: url('../../../assets/imgs/box01.png');
   margin-right: 20px;
   display: flex;
   flex-direction: row;
@@ -95,7 +95,7 @@ export default {
 .numbers {
   width: 30px;
   height: 40px;
-  background-color: #0043b9;
+  background-color: #022559;
   border-radius: 2px;
   border: solid 1px #274d8e;
   margin-right: 3px;

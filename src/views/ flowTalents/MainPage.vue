@@ -3,9 +3,33 @@
     <div class="main">
       <!-- 页面顶部 -->
       <div class="top">
-        <div class="picker">新疆维吾尔自治区</div>
+        <div class="picker">
+          <select
+            class="provice_select"
+            name="province-choice"
+            v-model="couponSelected"
+            @change="getCouponSelected"
+          >
+            <option
+              v-for="(coupon, index) in provinceOption"
+              :key="index"
+              :value="index"
+            >
+              {{ coupon }}
+            </option>
+          </select>
+        </div>
         <div class="title">流动人员档案情况分析</div>
-        <div class="picker">日期选择器</div>
+        <div class="picker">
+          <input
+            class="date_picker"
+            type="date"
+            name="start_time"
+            value="2020-2-3"
+            v-model="selectDay"
+            @change="getDay"
+          />
+        </div>
       </div>
       <!-- 页面中部四个方块部分 -->
       <div class="center">
@@ -14,7 +38,7 @@
           title="档案总存档"
           :down="down"
           :up="up"
-          :imgurl="allImg"
+          :imgurl="'档案总存档'"
         >
         </top-box>
         <top-box
@@ -22,7 +46,7 @@
           title="档案接受量"
           :down="down"
           :up="up"
-          :imgurl="receiveImg"
+          :imgurl="'档案接受量'"
         >
         </top-box>
         <top-box
@@ -30,7 +54,7 @@
           title="档案借阅量"
           :down="down"
           :up="up"
-          :imgurl="rendImg"
+          :imgurl="'档案借阅量'"
         >
         </top-box>
         <top-box
@@ -38,7 +62,7 @@
           title="档案转出量"
           :down="down"
           :up="up"
-          :imgurl="outImg"
+          :imgurl="'档案转出量'"
         >
         </top-box>
       </div>
@@ -110,14 +134,15 @@
             </div>
             <map-chart
               class="map_chart"
-              :keys="'in'"
-              v-if="isSelected"
+              :keys="chartKey"
+              :mapData="mapDatas"
             ></map-chart>
-            <map-chart
+            <!-- <map-chart
               class="map_chart"
               :keys="'out'"
               v-if="!isSelected"
-            ></map-chart>
+              :mapData="outData"
+            ></map-chart> -->
             <!-- <out-chart class="map_chart" v-if="!isSelected"></out-chart> -->
           </div>
           <div class="mapBottom">
@@ -199,7 +224,6 @@ import Panel from './charts/panel.vue'
 import ScreenAdapter from './charts/ScreenAdapter.vue'
 import pyramid from './charts/newPyramid.vue'
 import mapChart from './charts/mapChart.vue'
-import outChart from './charts/outChart.vue'
 
 // 饮用component组件 用@
 export default {
@@ -213,18 +237,15 @@ export default {
     ScreenAdapter,
     pyramid,
     mapChart,
-    outChart,
   },
   data() {
     return {
-      dajsl: 46199, // 档案接收量
+      provinceOption: ['新疆维吾尔自治区', '四川省'],
+      selectDay: '', //选中的时间日期
+      dajsl: 4619, // 档案接收量
       dajslArr: [], // 档案接收量数组
       up: '+2.56%', // 增长比例
       down: '-2.56%', // 下降比例
-      allImg: '', // 档案总存档图标路径
-      receiveImg: '', // 档案接收量图标路径
-      rendImg: '', // 档案租借量图标路径
-      outImg: '', // 档案转出量图标路径
       sexData: [
         { name: '男性', val: '245678', per: '50.00%' },
         { name: '女性', val: '240078', per: '50.00%' },
@@ -270,17 +291,115 @@ export default {
       yellowlogo: '',
       greenlogo: '',
       showPanel: false,
-      isSelected: false, // 按钮是佛选中
-      chartKey: '', //地图 转入还是转出
+      isSelected: true, // 按钮是佛选中
+      chartKey: 'in', //地图 转入还是转出
+      outData: [
+        {
+          count: 2,
+          sourceLat: '42.50064453125', // 北纬
+          sourceLng: '93.28025390625', // 东经
+          targetName: '乌鲁木齐',
+          targetId: '001',
+        },
+        {
+          count: 2,
+          sourceLat: '39.30064453125',
+          sourceLng: '75.59025390625',
+          targetName: '乌鲁木齐',
+          targetId: '001',
+        },
+      ],
+      inData: [
+        {
+          count: 2,
+          sourceLat: '42.50064453125', // 北纬
+          sourceLng: '93.28025390625', // 东经
+          name: '和田地区',
+          targetName: '乌鲁木齐',
+          targetId: '001',
+        },
+        {
+          count: 6,
+          sourceLat: '39.30064453125',
+          sourceLng: '75.59025390625',
+          targetName: '乌鲁木齐',
+          name: '和田地区',
+          targetId: '001',
+        },
+        {
+          count: 8,
+          sourceLat: '44.57064453125',
+          sourceLng: '82.08025390625',
+          name: '和田地区',
+          targetName: '乌鲁木齐',
+          targetId: '001',
+        },
+        {
+          count: 10,
+          sourceLat: '37.12064453125',
+          sourceLng: '79.94025390625',
+          name: '和田地区',
+          targetName: '乌鲁木齐',
+          targetId: '001',
+        },
+      ],
+      mapDatas: [
+        {
+          count: 2,
+          sourceLat: '42.50064453125', // 北纬
+          sourceLng: '93.28025390625', // 东经
+          name: '和田地区',
+          targetName: '乌鲁木齐',
+          targetId: '001',
+        },
+        {
+          count: 6,
+          sourceLat: '39.30064453125',
+          sourceLng: '75.59025390625',
+          targetName: '乌鲁木齐',
+          name: '和田地区',
+          targetId: '001',
+        },
+        {
+          count: 8,
+          sourceLat: '44.57064453125',
+          sourceLng: '82.08025390625',
+          name: '和田地区',
+          targetName: '乌鲁木齐',
+          targetId: '001',
+        },
+        {
+          count: 10,
+          sourceLat: '37.12064453125',
+          sourceLng: '79.94025390625',
+          name: '和田地区',
+          targetName: '乌鲁木齐',
+          targetId: '001',
+        },
+      ],
     }
   },
   mounted() {
     this.arrSet()
-    this.imgUrlSet()
     this.setColor()
     this.setBarData()
   },
+  created() {
+    this.couponSelected = 0
+  },
   methods: {
+    /**
+     * 获取选中的省份
+     */
+    getCouponSelected() {
+      console.log(this.couponSelected)
+    },
+    /**
+     * 获取选中的日期
+     */
+    getDay() {
+      console.log(this.selectDay)
+    },
     /**
      * 点击按钮切换map数据
      * key: 0是转入 1是转出
@@ -289,9 +408,11 @@ export default {
       if (key === 0) {
         this.isSelected = true
         this.chartKey = 'in'
+        this.mapDatas = this.inData
       } else {
         this.isSelected = false
         this.chartKey = 'out'
+        this.mapDatas = this.outData
       }
     },
     /**
@@ -300,35 +421,12 @@ export default {
     arrSet() {
       const counts = this.dajsl.toString().split('') // 将数字转位数组
       this.dajslArr = counts
-
-      if (this.dajslArr.length < 6) {
-        if (this.dajslArr.length === 5) {
-          this.dajslArr.unshift('0')
-        }
-        if (this.dajslArr.length === 4) {
-          this.dajslArr.unshift('0', '0')
-        }
-        if (this.dajslArr.length === 3) {
-          this.dajslArr.unshift('0', '0', '0')
-        }
-        if (this.dajslArr.length === 2) {
-          this.dajslArr.unshift('0', '0', '0', '0')
-        }
-        if (this.dajslArr.length === 1) {
-          this.dajslArr.unshift('0', '0', '0', '0', '0')
-        }
+      let len = this.dajslArr.length
+      for (let i = 0; i < 6 - len; i++) {
+        this.dajslArr.unshift('0')
       }
     },
-    /**
-     * 处理图像路径 方便传参
-     */
-    imgUrlSet() {
-      // topBox 组件的图片
-      this.allImg = require('../../assets/imgs/档案总存档.png')
-      this.receiveImg = require('../../assets/imgs/档案接受量.png')
-      this.rendImg = require('../../assets/imgs/档案借阅量.png')
-      this.outImg = require('../../assets/imgs/档案转出量.png')
-    },
+
     /**
      * 设置饼图的颜色
      */
@@ -348,6 +446,9 @@ export default {
 
       this.flag = true
     },
+    /**
+     * 设置柱状图的数据
+     */
     setBarData() {
       // eslint-disable-next-line no-unused-expressions
       this.fileData = [
@@ -443,6 +544,29 @@ export default {
   line-height: 80px;
   letter-spacing: 1px;
   color: #5db1ff;
+  .provice_select {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 144, 255, 0.22),
+      rgba(0, 144, 255, 0)
+    );
+    color: #5db1ff;
+    border: 0px;
+    font-size: 18px;
+    height: 33px;
+  }
+  .date_picker {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 144, 255, 0.22),
+      rgba(0, 144, 255, 0)
+    );
+    color: #5db1ff;
+    border: 0px;
+    font-size: 18px;
+    height: 33px;
+    margin-left: -50px;
+  }
 }
 /* 中间四个框部分 */
 .center {

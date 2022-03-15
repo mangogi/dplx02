@@ -1,10 +1,10 @@
 <template>
   <div>
-    <span class="title_body" :class="{marginLeft:!showPic}">
-        <img :src="img" class="img" v-if="showPic"> {{provinceData.name}}
+    <span class="title_body" :class="{ marginLeft: !showPic }">
+      <img :src="img" class="img" v-if="showPic" /> {{ provinceData.name }}
     </span>
     <div class="charts" ref="chart"></div>
-    <span class="number_tip">{{provinceData.num}}</span>
+    <span class="number_tip">{{ provinceData.num }}</span>
   </div>
 </template>
 
@@ -15,36 +15,36 @@ export default {
     provinceData: {
       type: Object,
       default: () => {
-        return {name: '四川省', value: 0.63, num: '8.8万人'}
-      }
+        return { name: '四川省', value: 0.63, num: '8.8万人' }
+      },
     },
     colors: {
       type: Array,
       default: () => {
         return ['rgb(252, 86, 50)', 'rgba(252, 86, 50, 0.1)']
-      }
+      },
     },
     imgurl: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
-  data () {
+  data() {
     return {
       showPic: true,
-      img: ''
+      img: '',
     }
   },
-  mounted () {
+  mounted() {
     this.chartsInit()
     this.getUrl()
   },
-  beforeDestory () {
+  beforeDestory() {
     this.$echarts.dispose(this.myChart)
     this.myChart = null
   },
   methods: {
-    getUrl () {
+    getUrl() {
       if (this.imgurl === '') {
         this.showPic = false
         this.img = ''
@@ -53,7 +53,7 @@ export default {
         this.showPic = true
       }
     },
-    chartsInit () {
+    chartsInit() {
       const chart = this.$refs.chart
       if (chart) {
         let myChart = this.$echarts.init(chart)
@@ -65,14 +65,14 @@ export default {
           colorStops: [
             {
               offset: 0,
-              color: 'rgba(252, 86, 50, 0.1)' // 0% 处的颜色
+              color: 'rgba(252, 86, 50, 0.1)', // 0% 处的颜色
             },
             {
               offset: 1,
-              color: 'rgb(252, 86, 50)' // 100% 处的颜色
-            }
+              color: 'rgb(252, 86, 50)', // 100% 处的颜色
+            },
           ],
-          globalCoord: false // 缺省为 false
+          globalCoord: false, // 缺省为 false
         }
         const option = {
           graphic: {
@@ -85,13 +85,13 @@ export default {
                 style: {
                   image: require('../../../assets/imgs/sichuansheng.png'),
                   width: 48,
-                  height: 48
-                }
-              }
-            ]
+                  height: 48,
+                },
+              },
+            ],
           },
           grid: {
-            top: '-30%'
+            top: '-30%',
           },
           series: [
             {
@@ -104,23 +104,20 @@ export default {
               splitNumber: 80,
               detail: {
                 offsetCenter: [0, -20],
-                formatter: ' '
+                formatter: ' ',
               },
               pointer: {
-                show: false
+                show: false,
               },
               axisLine: {
                 show: true,
                 lineStyle: {
-                  color: [
-                    [1, '#E6EBF8']
-
-                  ],
-                  width: 30
-                }
+                  color: [[1, '#E6EBF8']],
+                  width: 30,
+                },
               },
               axisTick: {
-                show: false
+                show: false,
               },
               splitLine: {
                 show: true,
@@ -128,12 +125,12 @@ export default {
                 splitNumber: 100,
                 lineStyle: {
                   color: 'rgba(255,255,255,0.7)',
-                  width: 1
-                }
+                  width: 1,
+                },
               },
               axisLabel: {
-                show: false
-              }
+                show: false,
+              },
             },
             {
               // 进度圆环
@@ -145,12 +142,12 @@ export default {
               itemStyle: {
                 normal: {
                   label: {
-                    show: true
+                    show: true,
                   },
                   labelLine: {
-                    show: false
-                  }
-                }
+                    show: false,
+                  },
+                },
               },
               hoverAnimation: false,
 
@@ -159,9 +156,9 @@ export default {
                   value: Math.round(this.provinceData.value * 100),
                   itemStyle: {
                     normal: {
-                      color: Green
-                    }
-                  }
+                      color: Green,
+                    },
+                  },
                 },
                 {
                   // 画中间的图标
@@ -175,8 +172,8 @@ export default {
                     width: 16,
                     height: 16,
                     borderRadius: 20,
-                    padding: 11
-                  }
+                    padding: 11,
+                  },
                 },
                 {
                   value: 100 - Math.round(this.provinceData.value * 100),
@@ -185,23 +182,23 @@ export default {
                     normal: {
                       color: 'transparent', // 未完成的圆环的颜色
                       label: {
-                        show: false
+                        show: false,
                       },
                       labelLine: {
-                        show: false
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          ]
+                        show: false,
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+          ],
         }
 
         myChart.setOption(option)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -211,23 +208,23 @@ export default {
   height: 150px;
   margin-top: -20px;
 }
-.title_body{
-    font-size: 14px;
-    margin-left: 30px;
-    color: #fff;
-    .img{
-      width: 16px;
-      height: 16px;
-    }
+.title_body {
+  font-size: 14px;
+  margin-left: 30px;
+  color: #fff;
+  .img {
+    width: 16px;
+    height: 16px;
+  }
 }
-.number_tip{
-    font-size: 16px;
-    color: #5afff1;
-    margin-left: 40px;
-    position: relative;
-    top: -30px;
+.number_tip {
+  font-size: 16px;
+  color: #5afff1;
+  margin-left: 40px;
+  position: relative;
+  top: -30px;
 }
-.marginLeft{
-    margin-left: 46px;
+.marginLeft {
+  margin-left: 46px;
 }
 </style>

@@ -103,5 +103,10 @@
     "src/**/*.{js,vue}": [
       "eslint"
     ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }

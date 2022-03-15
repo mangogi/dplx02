@@ -8,8 +8,6 @@
 
 <script>
 import mapJson from '../../../../static/json/xinjiang.json'
-// import echarts from 'echarts'
-// import 'echarts/map/js/china.js';
 export default {
   name: 'mapChart',
   props: {
@@ -75,7 +73,13 @@ export default {
     keys: {
       handler(val, oldVal) {
         if (val) {
-          this.drawMap(this.lineColor)
+          if (this.keys == 'in') {
+            this.lineColor = '#1be7d4' // 绿色
+          } else {
+            this.lineColor = '#e7db1b' //黄色
+            console.log('oooo')
+          }
+          this.drawMap()
         }
       },
       deep: true,
@@ -86,6 +90,10 @@ export default {
     this.drawMap()
   },
   created() {},
+  beforeDestory() {
+    this.$echarts.dispose(this.myChart)
+    this.myChart = null
+  },
   methods: {
     drawMap() {
       console.log(this.destination)
@@ -111,7 +119,6 @@ export default {
                 coord: toCoord,
               },
             ])
-            this.lineColor = '#1be7d4'
           }
           if (fromCoord && toCoord && this.keys == 'out') {
             if (fromCoord && toCoord) {
@@ -124,7 +131,6 @@ export default {
                   coord: fromCoord, // 出发地
                 },
               ])
-              this.lineColor = '#e7db1b'
             }
           }
         }
@@ -132,6 +138,9 @@ export default {
       }
       this.getOpt(this.lineColor)
     },
+    /**
+     * 设置option
+     */
     getOpt(color) {
       this.option = {
         tooltip: {
@@ -142,15 +151,18 @@ export default {
         },
         geo: {
           map: 'xinijang',
-          aspectScale: 0.75,
-          zoom: 1.18,
+          aspectScale: 0.75, //长宽比
+          zoom: 1.15,
           roam: false,
           itemStyle: {
             normal: {
               areaColor: '#013c62',
               shadowColor: '#182f68',
               shadowOffsetX: 0,
-              shadowOffsetY: 26, // 阴影 实现效果
+              shadowOffsetY: 20, // 阴影 实现效果
+              label: {
+                show: true,
+              },
             },
             emphasis: {
               areaColor: '#2ab8ff',
@@ -271,6 +283,9 @@ export default {
       }
       this.chart.setOption(this.option)
     },
+    /**
+     * 更新图表
+     */
     refreshChart() {
       this.chart.setOption(this.option)
     },

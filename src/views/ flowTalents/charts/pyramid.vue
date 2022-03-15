@@ -1,19 +1,21 @@
 <template>
   <!-- 切图实现棱锥体 -->
-  <div class="pyramid"
-       ref="pyramid">
-  </div>
+  <div class="pyramid" ref="pyramid"></div>
 </template>
 <script>
 export default {
   name: 'pyramid',
   data() {
     return {
-      loadingFunnel: { arrData: [20, 40, 60, 80, 100], title: {} }
+      loadingFunnel: { arrData: [20, 40, 60, 80, 100], title: {} },
     }
   },
   mounted() {
     this.test()
+  },
+  beforeDestory() {
+    this.$echarts.dispose(this.myChart)
+    this.myChart = null
   },
   methods: {
     setTitle(text, top, left, color, fontStyle, fontFamily, fontSize) {
@@ -25,8 +27,8 @@ export default {
           color: color,
           fontStyle: fontStyle,
           fontFamily: fontFamily,
-          fontSize: fontSize
-        }
+          fontSize: fontSize,
+        },
       }
       return this.loadingFunnel.title
     },
@@ -124,12 +126,12 @@ export default {
             'normal',
             'Digital',
             '20'
-          )
+          ),
         ],
         color: ['#bb0004', '#FFD48A'],
         tooltip: {
           show: true,
-          formatter: function (params, ticket, callback) {
+          formatter: function(params, ticket, callback) {
             console.log('params', params)
             switch (params.name) {
               case '指标一':
@@ -143,42 +145,42 @@ export default {
               default:
                 return '指标五 :&emsp;' + 100
             }
-          }
+          },
         },
         grid: {
           // containLabel: true,
           left: '10%',
           top: '19%',
-          bottom: '15%'
+          bottom: '15%',
         },
         xAxis: {
           show: false,
           data: ['一季度', '二季度', '三季度', '四季度'],
           axisTick: {
-            show: false
+            show: false,
           },
           axisLabel: {
             color: '#5EA2ED',
-            interval: 0
+            interval: 0,
           },
           axisLine: {
             lineStyle: {
-              color: '#1B5BBA'
-            }
-          }
+              color: '#1B5BBA',
+            },
+          },
         },
         yAxis: {
           show: false,
           splitLine: { show: false },
           axisLine: {
             lineStyle: {
-              color: '#1B5BBA'
-            }
+              color: '#1B5BBA',
+            },
           },
           axisLabel: {
             color: '#5EA2ED',
-            interval: 0
-          }
+            interval: 0,
+          },
         },
         series: [
           {
@@ -202,7 +204,8 @@ export default {
                 symbolSize: ['80%', '68%'], // 宽和高
                 symbolPosition: 'center',
                 symbolOffset: [152, '-600%'],
-                symbol: 'image://' + require('../../../assets/imgs/yuanzhuiti.png')
+                symbol:
+                  'image://' + require('../../../assets/imgs/yuanzhuiti.png'),
                 //    symbol:'image://../static/img/ylsrgc/02.png',
                 // symbol:'triangle'
               },
@@ -213,8 +216,9 @@ export default {
                 symbolSize: ['100%', '33%'],
                 symbolPosition: 'center',
                 symbolOffset: [50.5, '-400%'],
-                symbol: 'image://' + require('../../../assets/imgs/yuanxingweixuanzhong.png')
-
+                symbol:
+                  'image://' +
+                  require('../../../assets/imgs/yuanxingweixuanzhong.png'),
               },
               {
                 name: '指标三',
@@ -223,7 +227,9 @@ export default {
                 symbolSize: ['150%', '33%'],
                 symbolPosition: 'center',
                 symbolOffset: [-50, '-145%'],
-                symbol: 'image://' + require('../../../assets/imgs/yuanxingweixuanzhong.png')
+                symbol:
+                  'image://' +
+                  require('../../../assets/imgs/yuanxingweixuanzhong.png'),
               },
               {
                 name: '指标四',
@@ -232,7 +238,9 @@ export default {
                 symbolSize: ['205%', '33%'],
                 symbolPosition: 'center',
                 symbolOffset: [-149, '-10%'],
-                symbol: 'image://' + require('../../../assets/imgs/yuanxingweixuanzhong.png')
+                symbol:
+                  'image://' +
+                  require('../../../assets/imgs/yuanxingweixuanzhong.png'),
               },
               {
                 name: '指标五',
@@ -241,15 +249,17 @@ export default {
                 symbolSize: ['245%', '33%'],
                 symbolPosition: 'center',
                 symbolOffset: [-245, '75%'],
-                symbol: 'image://' + require('../../../assets/imgs/yuanxingweixuanzhong.png')
-              }
-            ]
-          }
-        ]
+                symbol:
+                  'image://' +
+                  require('../../../assets/imgs/yuanxingweixuanzhong.png'),
+              },
+            ],
+          },
+        ],
       }
       chart1.setOption(option1)
-    }
-  }
+    },
+  },
 }
 </script>
 
