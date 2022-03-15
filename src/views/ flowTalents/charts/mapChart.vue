@@ -2,7 +2,7 @@
   <div
     id="regionCharts"
     ref="map"
-    :style="{ width: '800px', height: '580px' }"
+    :style="{ width: width + 'px', height: height + 'px' }"
   ></div>
 </template>
 
@@ -60,6 +60,14 @@ export default {
       type: String,
       default: 'in',
     },
+    width: {
+      type: String,
+      default: '800',
+    },
+    height: {
+      type: String,
+      default: '580',
+    },
   },
   data() {
     return {
@@ -77,13 +85,11 @@ export default {
             this.lineColor = '#1be7d4' // 绿色
           } else {
             this.lineColor = '#e7db1b' //黄色
-            console.log('oooo')
           }
           this.drawMap()
         }
       },
       deep: true,
-      immediate: true,
     },
   },
   mounted() {
@@ -96,7 +102,6 @@ export default {
   },
   methods: {
     drawMap() {
-      console.log(this.destination)
       // 注册地图
       this.$echarts.registerMap('xinijang', mapJson) // 如果是js引入就不需要这一行了
       // 绘制地图
@@ -108,7 +113,6 @@ export default {
           let dataItem = data[i]
           let fromCoord = [dataItem.sourceLng, dataItem.sourceLat] // 起点
           let toCoord = des // 终点
-          console.log(des)
           if (fromCoord && toCoord && this.keys == 'in') {
             res.push([
               {
@@ -146,7 +150,7 @@ export default {
         tooltip: {
           trigger: 'item',
           formatter: function(params) {
-            console.log('tool', params)
+            // return params
           },
         },
         geo: {

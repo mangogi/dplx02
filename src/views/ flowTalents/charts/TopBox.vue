@@ -101,7 +101,7 @@ export default {
   margin-right: 3px;
   text-align: center;
   animation-name: numbers;
-  animation-duration: 4s;
+  animation-duration: 6s;
 }
 @keyframes numbers {
   0% {

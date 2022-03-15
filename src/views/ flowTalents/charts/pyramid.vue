@@ -34,7 +34,6 @@ export default {
     },
     test() {
       let chart1 = this.$echarts.init(this.$refs.pyramid)
-      console.log(chart1)
       let option1 = {
         title: [
           this.setTitle(
@@ -132,7 +131,6 @@ export default {
         tooltip: {
           show: true,
           formatter: function(params, ticket, callback) {
-            console.log('params', params)
             switch (params.name) {
               case '指标一':
                 return '指标一 :&emsp;' + 20

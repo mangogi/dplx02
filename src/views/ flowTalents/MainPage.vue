@@ -3,6 +3,7 @@
     <div class="main">
       <!-- 页面顶部 -->
       <div class="top">
+        <!-- 地区选择器 -->
         <div class="picker">
           <select
             class="provice_select"
@@ -20,6 +21,7 @@
           </select>
         </div>
         <div class="title">流动人员档案情况分析</div>
+        <!-- 时间选择器 -->
         <div class="picker">
           <input
             class="date_picker"
@@ -97,7 +99,7 @@
               <div class="titletext">学历分布</div>
             </div>
             <!-- 学历分布漏斗图 -->
-            <pyramid></pyramid>
+            <pyramid :pyData="pyData"></pyramid>
           </div>
         </div>
 
@@ -106,6 +108,7 @@
           <div class="mapTop">
             <br />
             <p class="map_title">劳动转移情况</p>
+            <!-- 转入转出两个按钮 -->
             <div class="map_btnbox">
               <button
                 class="map_btn"
@@ -132,20 +135,15 @@
                 <span>转出</span>
               </div>
             </div>
+            <!-- 地图 -->
             <map-chart
               class="map_chart"
               :keys="chartKey"
               :mapData="mapDatas"
             ></map-chart>
-            <!-- <map-chart
-              class="map_chart"
-              :keys="'out'"
-              v-if="!isSelected"
-              :mapData="outData"
-            ></map-chart> -->
-            <!-- <out-chart class="map_chart" v-if="!isSelected"></out-chart> -->
           </div>
           <div class="mapBottom">
+            <!-- 中下的六个仪表盘 -->
             <p>转移排行</p>
             <div class="panel_box">
               <panel
@@ -258,11 +256,7 @@ export default {
         { name: '个人存档', val: '245678', per: '50.00%' },
         { name: '企业存档', val: '180078', per: '50.00%' },
       ], // 性质饼图数据
-      bgUrl: '', //
-      sexUrl: '',
-      nationUrl: '',
-      natureUrl: '',
-      sexColorOne: [],
+      sexColorOne: [], //饼图的颜色
       sexColorTwo: [],
       nationColorOne: [],
       nationColorTwo: [],
@@ -270,12 +264,12 @@ export default {
       natureColorTwo: [],
       flag: false, // 为了解决页面加载完成了 但是数据没有传到子组件的问题
       ageData: [
-        { name: '60岁以上', value: '1234', per: '12%' },
-        { name: '50～59', value: '1234', per: '12%' },
-        { name: '40～49', value: '1234', per: '12%' },
-        { name: '30～39', value: '1234', per: '12%' },
-        { name: '20～29', value: '1234', per: '12%' },
-        { name: '20及以下', value: '1234', per: '12%' },
+        { name: '60岁以上', value: '44440000', per: '12%' },
+        { name: '50～59', value: '23340000', per: '12%' },
+        { name: '40～49', value: '1234000', per: '12%' },
+        { name: '30～39', value: '6640000', per: '12%' },
+        { name: '20～29', value: '12340000', per: '12%' },
+        { name: '20及以下', value: '12340000', per: '12%' },
       ],
       fileData: [],
       showBar: false,
@@ -287,13 +281,11 @@ export default {
         { name: '上海市', value: 0.63, num: '8.8万人' },
         { name: '江苏省', value: 0.63, num: '8.8万人' },
       ],
-      redlogo: '',
-      yellowlogo: '',
-      greenlogo: '',
       showPanel: false,
       isSelected: true, // 按钮是佛选中
       chartKey: 'in', //地图 转入还是转出
       outData: [
+        // 转出数据
         {
           count: 2,
           sourceLat: '42.50064453125', // 北纬
@@ -310,6 +302,7 @@ export default {
         },
       ],
       inData: [
+        // 转入数据
         {
           count: 2,
           sourceLat: '42.50064453125', // 北纬
@@ -344,6 +337,7 @@ export default {
         },
       ],
       mapDatas: [
+        // 地图的数据
         {
           count: 2,
           sourceLat: '42.50064453125', // 北纬
@@ -377,6 +371,13 @@ export default {
           targetId: '001',
         },
       ],
+      pyData: [
+        { value: 20, name: '硕士及以上' },
+        { value: 40, name: '本科' },
+        { value: 60, name: '高中' },
+        { value: 80, name: '中专及以下' },
+        { value: 100, name: '专科' },
+      ],
     }
   },
   mounted() {
@@ -391,28 +392,50 @@ export default {
     /**
      * 获取选中的省份
      */
-    getCouponSelected() {
-      console.log(this.couponSelected)
-    },
+    getCouponSelected() {},
     /**
      * 获取选中的日期
      */
-    getDay() {
-      console.log(this.selectDay)
-    },
+    getDay() {},
     /**
      * 点击按钮切换map数据
-     * key: 0是转入 1是转出
+     * @param key {number} 0是转入 1是转出
      */
     changeMap(key) {
       if (key === 0) {
         this.isSelected = true
         this.chartKey = 'in'
         this.mapDatas = this.inData
+        // 测试数据更新 无实际意义
+        this.provinceData[2] = {
+          name: '湖南省',
+          value: 0.63,
+          num: '8.8万人',
+        }
+        this.pyData = [
+          { value: 20, name: '硕士及以上' },
+          { value: 40, name: '本科' },
+          { value: 60, name: '高中' },
+          { value: 80, name: '中专及以下' },
+          { value: 100, name: '专科' },
+        ]
       } else {
         this.isSelected = false
         this.chartKey = 'out'
         this.mapDatas = this.outData
+        // 测试数据更新 无实际意义
+        this.provinceData[2] = {
+          name: '内蒙古',
+          value: 0.63,
+          num: '10000万人',
+        }
+        this.pyData = [
+          { value: 10, name: '硕士及以上' },
+          { value: 40, name: '本科' },
+          { value: 60, name: '高中' },
+          { value: 80, name: '中专及以下' },
+          { value: 100, name: '专科' },
+        ]
       }
     },
     /**
@@ -450,7 +473,6 @@ export default {
      * 设置柱状图的数据
      */
     setBarData() {
-      // eslint-disable-next-line no-unused-expressions
       this.fileData = [
         {
           name: '20210302',
@@ -488,9 +510,7 @@ export default {
           out: 333,
         },
       ]
-      this.$nextTick(() => {
-        this.showBar = true
-      })
+      this.showBar = true
     },
   },
 }

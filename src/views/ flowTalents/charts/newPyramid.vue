@@ -1,34 +1,78 @@
 <template>
-  <div class="pyramid" ref="pyramid"></div>
+  <div
+    class="pyramid"
+    ref="pyramid"
+    :style="{ width: width + 'px', height: height + 'px' }"
+  ></div>
 </template>
 
 <script>
 export default {
   name: 'newPyramid',
+  props: {
+    pyData: {
+      type: Array,
+      default: () => {
+        return [
+          { value: 20, name: '硕士及以上' },
+          { value: 40, name: '本科' },
+          { value: 60, name: '高中' },
+          { value: 80, name: '中专及以下' },
+          { value: 100, name: '专科' },
+        ]
+      },
+    },
+    colors: {
+      type: Array,
+      default: () => {
+        return ['#8bfffd', '#3de6e3', '#3bbcd9', '#378acc', '#345ec0']
+      },
+    },
+    width: {
+      type: String,
+      default: '500',
+    },
+    height: {
+      type: String,
+      default: '270',
+    },
+  },
   data() {
     return {
       chart: {},
     }
   },
+  watch: {
+    pyData: {
+      handler(val, oldVal) {
+        if (val) {
+          this.getOption()
+        }
+      },
+    },
+  },
   mounted() {
     this.initCharts()
   },
   methods: {
+    /**
+     * 初始化
+     */
     initCharts() {
-      let datas = [
-        { value: 20, name: '硕士及以上' },
-        { value: 40, name: '本科' },
-        { value: 60, name: '高中' },
-        { value: 80, name: '中专及以下' },
-        { value: 100, name: '专科' },
-      ]
+      const pyramid = this.$refs.pyramid
+      this.chart = this.$echarts.init(pyramid)
+      this.getOption()
+    },
+    /**
+     * 设置option
+     */
+    getOption() {
+      let datas = this.pyData
       let all = 0
       datas.forEach(item => {
         return (all = all + item.value)
       })
-      const pyramid = this.$refs.pyramid
-      this.chart = this.$echarts.init(pyramid)
-      var colorList = ['#8bfffd', '#3de6e3', '#3bbcd9', '#378acc', '#345ec0']
+      let colorList = this.colors
       let option = {
         color: colorList,
         tooltip: {
@@ -141,9 +185,4 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-.pyramid {
-  width: 500px;
-  height: 270px;
-}
-</style>
+<style lang="less" scoped></style>
